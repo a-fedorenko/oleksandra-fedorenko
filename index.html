@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Oleksandra Fedorenko — Frontend-Entwicklerin">
+<meta property="og:description" content="Angular-Entwicklerin mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
+<meta property="og:locale" content="de_DE">
+<title>Oleksandra Fedorenko — Frontend-Entwicklerin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f0e4;
+    --bg-soft:#ece3d2;
+    --bg-elevated:#fffaf0;
+    --border:#d6c9b0;
+    --border-soft:#e4d9c3;
+    --ink:#241d33;
+    --muted:#5b5369;
+    --faint:#8b8398;
+    --label:#6a4fb3;
+    --sage:#8fb9ab;
+    --rose:#c98fa0;
+    --peri:#8fa0c9;
+    --peach:#d2a878;
+    --gold:#d8b76b;
+    --gold-soft:rgba(216,183,107,0.12);
+    --mystic:#8b6fe0;
+    --mystic-deep:#4b3a86;
+    --good:#17855a;
+    --accent:#9a7a3f;
+    --accent-soft:rgba(154,122,63,0.1);
+    --accent-deep:#7d6130;
+    --night:#1d1530;
+    --night-2:#2a2044;
+    --radius:8px;
+  }
+  /* tarot modal keeps the dark "mystic" palette */
+  .tarot-overlay{
+    --bg:#15171d; --bg-soft:#1a1c23; --bg-elevated:#20232b; --border:#2e323c; --border-soft:#262932;
+    --ink:#edeff2; --muted:#9aa0ab; --faint:#656a75; --label:#c9a876; --accent:#c9a876; --good:#34d399;
+    color:var(--ink);
+  }
+  .tarot-overlay .btn-solid:hover{ background:#fff; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Lora', serif; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+  ::selection{ background:var(--gold); color:var(--night); }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:60; background:rgba(250,248,244,0.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 28px; height:62px;
+  }
+  .topbar .name{
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:13.5px; letter-spacing:0.08em; color:var(--ink); text-transform:uppercase;
+  }
+  .topbar nav{ display:flex; gap:26px; align-items:center; }
+  .topbar nav a{
+    font-size:13.5px; text-decoration:none; color:var(--muted); font-weight:500;
+    transition:color .15s;
+  }
+  .topbar nav a:hover{ color:var(--ink); }
+  @media (max-width:860px){ .topbar nav a.navlink{ display:none; } }
+  .topbar .actions{ display:flex; gap:10px; align-items:center; }
+  .btn{
+    font-family:'Inter'; font-size:13px; font-weight:600; text-decoration:none;
+    padding:9px 16px; border-radius:var(--radius); display:inline-flex; align-items:center; gap:7px;
+    transition:background .15s, color .15s, border-color .15s, transform .15s; cursor:pointer; border:none;
+  }
+  .btn-solid{ background:var(--ink); color:var(--bg); }
+  .btn-solid:hover{ background:#343b4d; }
+  .btn-line{ border:1px solid var(--border); color:var(--ink); background:transparent; }
+  .btn-line:hover{ border-color:var(--accent); color:var(--accent); }
+  @media (max-width:560px){ .btn span.full{ display:none; } }
+
+  .btn-tarot-nav{
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:12.5px; color:#17191f;
+    background:linear-gradient(120deg, var(--gold), #f0d79a 45%, var(--mystic) 110%);
+    background-size:180% 180%; background-position:0% 50%;
+    padding:9px 17px; border-radius:30px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+    box-shadow:0 0 0 1px rgba(216,183,107,0.3), 0 4px 16px rgba(139,111,224,0.28);
+    transition:background-position .4s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-tarot-nav:hover{ background-position:100% 50%; transform:translateY(-1px); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 6px 20px rgba(139,111,224,0.4); }
+
+  /* ---------- layout ---------- */
+  .layout{ display:grid; grid-template-columns:328px 1fr; align-items:stretch; max-width:1280px; margin:0 auto; }
+  @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    background:var(--bg-soft);
+    padding:28px 26px 46px;
+    border-right:1px solid var(--border-soft);
+  }
+
+  .photo-frame{ margin:-28px -26px 24px; position:relative; overflow:hidden; }
+  @media (max-width:900px){ .photo-frame{ max-width:360px; margin:-28px auto 24px; } }
+  .photo-frame img{
+    width:100%; aspect-ratio:410/488; object-fit:cover; display:block;
+    
+  }
+
+  .avail{
+    display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--good);
+    margin-bottom:22px;
+  }
+  .avail .p{ width:7px; height:7px; border-radius:50%; background:var(--good); flex-shrink:0; box-shadow:0 0 8px var(--good); animation:pulse 1.8s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  .side-block{ margin-bottom:28px; }
+  .side-block:last-child{ margin-bottom:0; }
+  .side-h{
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.14em;
+    color:var(--label); margin-bottom:13px;
+  }
+  .contact-line{ margin-bottom:12px; }
+  .contact-line:last-child{ margin-bottom:0; }
+  .contact-line .lbl{ font-size:11px; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:3px; }
+  .contact-line a, .contact-line span.val{ font-size:14px; color:var(--ink); text-decoration:none; word-break:break-word; }
+  .contact-line a:hover{ color:var(--accent); text-decoration:underline; }
+
+  .skill-group{ margin-bottom:16px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-group h4{ font-size:12px; font-weight:700; margin-bottom:8px; color:var(--ink); }
+  .sq-list{ list-style:none; }
+  .sq-list li{
+    position:relative; padding-left:15px; margin-bottom:6px; font-size:13.5px; color:var(--muted);
+  }
+  .sq-list li::before{ content:"▪"; position:absolute; left:0; color:var(--accent); font-size:11px; top:1px; }
+
+  .proj-mini{ margin-bottom:14px; }
+  .proj-mini:last-child{ margin-bottom:0; }
+  .proj-mini .t{ font-size:13.5px; font-weight:700; margin-bottom:3px; color:var(--ink); }
+  .proj-mini .d{ font-size:12.5px; color:var(--muted); }
+
+  .lang-line{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:8px; color:var(--ink); }
+  .lang-line:last-child{ margin-bottom:0; }
+  .lang-line .lv{ color:var(--muted); font-size:12.5px; }
+
+  .cert-line{ font-size:13px; margin-bottom:10px; color:var(--muted); }
+  .cert-line:last-child{ margin-bottom:0; }
+  .cert-line .yr{ color:var(--faint); }
+
+  /* ---------- main column ---------- */
+  .main-col{ min-width:0; }
+  .header-band{
+    position:relative; overflow:hidden;
+    background-color:var(--sky);
+    background-image:radial-gradient(rgba(31,36,48,0.07) 1px, transparent 1px);
+    background-size:22px 22px;
+    border-bottom:1px solid var(--border-soft);
+    color:var(--ink); padding:54px 48px;
+  }
+  @media (max-width:640px){ .header-band{ padding:40px 26px; } }
+  .header-band h1{
+    font-family:'Lora', serif; font-style:italic;
+    font-size:clamp(28px,4vw,40px); font-weight:600; letter-spacing:0.005em;
+  }
+  .header-band .role{
+    font-family:'IBM Plex Mono'; font-style:normal; text-transform:uppercase;
+    font-size:12.5px; letter-spacing:0.14em; color:var(--label); margin-top:13px;
+  }
+
+  .content{ padding:44px 48px 60px; }
+  @media (max-width:640px){ .content{ padding:34px 26px 44px; } }
+
+  .summary{ font-size:16px; color:var(--muted); max-width:74ch; margin-bottom:52px; }
+  .summary strong{ color:inherit; font-weight:inherit; }
+
+  .sec-h{
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.14em;
+    color:var(--label); margin-bottom:26px; padding-bottom:10px; border-bottom:1px solid var(--border-soft);
+  }
+  section.block{ margin-bottom:56px; }
+  section.block:last-child{ margin-bottom:0; }
+
+  .job{ margin-bottom:38px; }
+  .job:last-child{ margin-bottom:0; }
+  .job .date{ font-size:13px; color:var(--faint); font-weight:600; margin-bottom:6px; letter-spacing:.02em; }
+  .job h3{ font-size:19px; font-weight:700; margin-bottom:3px; color:var(--ink); }
+  .job .org{ font-style:italic; font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .job .org a{ color:var(--accent); text-decoration:none; }
+  .job .org a:hover{ text-decoration:underline; }
+  .bullets{ list-style:none; margin-bottom:16px; }
+  .bullets li{
+    position:relative; padding-left:18px; margin-bottom:9px; font-size:15px; color:var(--muted);
+  }
+  .bullets li::before{ content:"▪"; position:absolute; left:0; color:var(--accent); font-size:11px; top:4px; }
+  .bullets li strong{ color:inherit; font-weight:inherit; }
+  .stackline{ font-size:13.5px; color:var(--faint); line-height:1.8; }
+  .stackline b{ color:var(--muted); }
+
+  .proj-card{
+    background:var(--bg-elevated); border:1px solid var(--border-soft); border-left:3px solid var(--accent);
+    padding:26px 28px; border-radius:0 10px 10px 0;
+    box-shadow:0 18px 36px -24px rgba(70,55,30,0.35);
+  }
+  .proj-card .org{ font-style:italic; font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .proj-card h3{ font-size:19px; margin-bottom:3px; color:var(--ink); }
+
+  .edu-item{ margin-bottom:24px; }
+  .edu-item:last-child{ margin-bottom:0; }
+  .edu-item .date{ font-size:13px; color:var(--faint); font-weight:600; margin-bottom:4px; }
+  .edu-item h3{ font-size:17px; font-weight:700; margin-bottom:2px; color:var(--ink); }
+  .edu-item .org{ font-style:italic; font-size:14px; color:var(--muted); }
+
+  /* ---------- tarot teaser strip ---------- */
+  .tarot-strip{
+    margin-top:12px; border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:24px 28px; display:flex; align-items:center; justify-content:space-between; gap:18px;
+    background:var(--bg-elevated);
+    flex-wrap:wrap;
+  }
+  .tarot-strip .txt h3{ font-size:15.5px; margin-bottom:4px; color:var(--ink); }
+  .tarot-strip .txt p{ font-size:13.5px; color:var(--muted); max-width:46ch; }
+  .btn-tarot{
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:13px; color:#17191f;
+    background:linear-gradient(120deg, var(--gold), #f0d79a 50%, var(--mystic));
+    padding:12px 22px; border-radius:30px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+    box-shadow:0 4px 18px rgba(139,111,224,0.3); transition:transform .15s, box-shadow .15s;
+  }
+  .btn-tarot:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(139,111,224,0.4); }
+
+  footer{
+    text-align:center; padding:30px 20px; background:var(--bg-soft); color:var(--faint);
+    font-size:12.5px; border-top:1px solid var(--border-soft);
+  }
+  footer a{ color:var(--accent); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+
+  /* ---------- tarot "night" accents: topbar, header band, teaser strip, footer ---------- */
+  .topbar{ background:rgba(29,21,48,0.95); border-bottom:1px solid rgba(216,183,107,0.28); }
+  .topbar .name{ color:#f6f0e4; }
+  .topbar nav a{ color:#c4bad9; }
+  .topbar nav a:hover{ color:#fff; }
+  .topbar .btn-line{ border-color:rgba(246,240,228,0.3); color:#f6f0e4; }
+  .topbar .btn-line:hover{ border-color:var(--gold); color:var(--gold); }
+  .topbar .btn-solid{ background:var(--gold); color:#1d1530; }
+  .topbar .btn-solid:hover{ background:#f0d79a; }
+  .header-band{
+    background-color:var(--night);
+    background-image:
+      radial-gradient(500px 220px at 85% 0%, rgba(139,111,224,0.38), transparent 70%),
+      radial-gradient(rgba(216,183,107,0.16) 1px, transparent 1px);
+    background-size:auto, 24px 24px;
+    border-bottom:1px solid rgba(216,183,107,0.3);
+    color:#f6f0e4;
+  }
+  .header-band h1{ color:#f6f0e4; }
+  .header-band .role{ color:var(--gold); }
+  .tarot-strip{
+    background:linear-gradient(135deg, var(--night-2), var(--night)); border-color:rgba(216,183,107,0.3);
+  }
+  .tarot-strip .txt h3{ color:#f6f0e4; }
+  .tarot-strip .txt p{ color:#c4bad9; }
+  footer{ background:var(--night); color:#a89fbf; border-top:1px solid rgba(216,183,107,0.28); }
+  footer a{ color:var(--gold); }
+
+  /* ================= TAROT MODAL ================= */
+  .tarot-overlay{
+    position:fixed; inset:0; background:rgba(4,4,7,0.82); backdrop-filter:blur(4px);
+    z-index:200; display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .tarot-overlay.open{ display:flex; }
+  .tarot-modal{
+    background:
+      radial-gradient(500px 240px at 15% -10%, rgba(139,111,224,0.22), transparent 60%),
+      radial-gradient(400px 220px at 100% 110%, rgba(216,183,107,0.12), transparent 60%),
+      var(--bg-soft);
+    border:1px solid var(--border); border-radius:16px; max-width:720px; width:100%; max-height:92vh; overflow-y:auto;
+    padding:24px 26px 26px; position:relative; box-shadow:0 40px 90px rgba(0,0,0,0.6);
+    display:flex; flex-direction:column;
+  }
+  .tarot-close{
+    position:absolute; top:12px; right:14px; background:none; border:none; font-size:20px; color:var(--faint);
+    cursor:pointer; line-height:1; padding:6px; z-index:2;
+  }
+  .tarot-close:hover{ color:var(--ink); }
+  .tarot-modal h2{
+    text-align:center; font-size:18px; color:#fff; margin-bottom:4px; letter-spacing:.01em;
+  }
+  .tarot-modal .sub{
+    text-align:center; font-size:12px; color:var(--muted); margin-bottom:14px;
+  }
+  .tarot-cards{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:14px;
+  }
+  @media (max-width:600px){ .tarot-cards{ grid-template-columns:1fr; } }
+  .tcard{
+    perspective:1200px; height:clamp(200px, 36vh, 280px); cursor:pointer;
+  }
+  .tcard-inner{
+    position:relative; width:100%; height:100%; transition:transform .7s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+  }
+  .tcard.flipped .tcard-inner{ transform:rotateY(180deg); }
+  .tcard-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:10px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;
+  }
+  .tcard-back{
+    background:linear-gradient(160deg, #241c3a, #140f20);
+    border:1px solid rgba(216,183,107,0.35);
+    box-shadow:inset 0 0 0 1px rgba(216,183,107,0.12), inset 0 0 40px rgba(139,111,224,0.12);
+  }
+  .tcard-back svg{ width:44px; height:44px; margin-bottom:6px; }
+  .tcard-back .klabel{ font-family:'Manrope'; font-weight:700; font-size:11px; color:var(--gold); letter-spacing:.04em; }
+  .tcard-front{
+    background:linear-gradient(175deg, var(--bg-elevated), #15121f);
+    border:1px solid var(--border); transform:rotateY(180deg); justify-content:flex-start; padding-top:12px;
+    box-shadow:inset 0 0 0 1px rgba(216,183,107,0.18);
+  }
+  .tcard-front svg{ width:40px; height:40px; margin-bottom:5px; }
+  .tcard-front h4{
+    font-family:'Manrope'; font-size:12.5px; color:var(--gold); margin-bottom:5px; letter-spacing:0.02em;
+  }
+  .tcard-front p{
+    font-size:11px; color:var(--muted); line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .tcard-label{
+    position:absolute; bottom:12px; left:0; right:0; text-align:center; font-size:10px;
+    text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.3);
+  }
+
+  .tarot-question-row{
+    display:flex; gap:8px; margin:0 auto 14px; max-width:460px; width:100%;
+  }
+  .tarot-question-input{
+    flex:1; min-width:0; font-family:'Inter'; font-size:12.5px; color:var(--ink);
+    background:rgba(255,255,255,0.04); border:1px solid rgba(216,183,107,0.3); border-radius:20px;
+    padding:7px 14px; outline:none; transition:border-color .15s, background .15s;
+  }
+  .tarot-question-input::placeholder{ color:var(--faint); }
+  .tarot-question-input:focus{ border-color:rgba(216,183,107,0.7); background:rgba(255,255,255,0.07); }
+  .tarot-reshuffle{
+    display:block; font-family:'IBM Plex Mono'; font-size:11px; color:var(--gold);
+    background:none; border:1px solid rgba(216,183,107,0.4); border-radius:20px; padding:5px 13px;
+    cursor:pointer; transition:background .15s; white-space:nowrap;
+  }
+  .tarot-reshuffle:hover{ background:rgba(216,183,107,0.1); }
+  .tarot-input-wrap{ position:relative; flex:1; min-width:0; display:flex; }
+  .tarot-input-wrap .tarot-question-input{ width:100%; padding-right:32px; }
+  .tarot-clear{ display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); width:20px; height:20px; border:none; border-radius:50%; background:rgba(255,255,255,0.1); color:var(--muted); font-size:14px; line-height:1; cursor:pointer; padding:0; }
+  .tarot-clear:hover{ background:rgba(255,255,255,0.2); color:#fff; }
+  .tarot-clear.show{ display:block; }
+  .tarot-question-echo{
+    display:block; font-style:italic; font-size:13px; color:var(--muted); margin-bottom:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .tcard-art{
+    width:100%; height:128px; flex:none; display:flex; align-items:center; justify-content:center;
+    margin:2px 0 6px; border-radius:6px; overflow:hidden; background:rgba(0,0,0,0.2);
+  }
+  .tcard-art img{ width:100%; height:100%; object-fit:contain; display:block; filter:sepia(0.18) saturate(1.05); }
+  .tcard-medallion{
+    width:60px; height:60px; border-radius:50%; align-items:center; justify-content:center;
+  }
+  .tcard-medallion svg{ width:34px; height:34px; }
+  .tcard-roman{ font-family:'IBM Plex Mono'; font-size:10px; color:rgba(216,183,107,0.6); letter-spacing:.1em; margin-bottom:1px; }
+
+  .tarot-verdict{
+    text-align:center; padding-top:14px; border-top:1px solid var(--border-soft);
+    opacity:0; visibility:hidden; transition:opacity .5s ease;
+  }
+  .tarot-verdict.reading #tarotCta{ display:none; }
+  .tarot-verdict.reading p{ min-height:calc(5em + 53px); margin-bottom:0; }
+  .tarot-verdict.show{ opacity:1; visibility:visible; }
+  .tarot-verdict .vlabel{
+    font-family:'Manrope'; font-weight:800; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:6px;
+  }
+  .tarot-verdict h3{ font-size:16px; color:#fff; margin-bottom:7px; }
+  .tarot-verdict p{ font-size:13px; color:var(--muted); max-width:56ch; margin:0 auto 14px; min-height:5em; }
+  .tarot-verdict .btn-solid{ display:inline-flex; }
+
+  /* ---------- floating tarot button ---------- */
+  .tarot-fab{
+    position:fixed; right:26px; bottom:26px; z-index:150;
+    width:60px; height:60px; border-radius:50%; border:1px solid rgba(216,183,107,0.35); cursor:pointer;
+    background:linear-gradient(160deg, #2a2d38, #1b1d24);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; line-height:1;
+    box-shadow:0 0 0 1px rgba(216,183,107,0.18), 0 10px 28px rgba(139,111,224,0.4);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .tarot-fab:hover{ transform:translateY(-3px) scale(1.05); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 14px 34px rgba(139,111,224,0.55); }
+  @media (max-width:640px){ .tarot-fab{ width:52px; height:52px; right:16px; bottom:16px; font-size:22px; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="name">OLEKSANDRA FEDORENKO</div>
+  <nav>
+    <a class="navlink" href="#erfahrung">Erfahrung</a>
+    <a class="navlink" href="#projekt">Projekt</a>
+    <a class="navlink" href="#ausbildung">Ausbildung</a>
+    <button class="btn-tarot-nav" onclick="openTarot()">🔮 Tarot-Lesung</button>
+  </nav>
+  <div class="actions">
+    <a class="btn btn-line" href="Oleksandra_Fedorenko_CV.pdf" target="_blank" rel="noopener"><span class="full">Lebenslauf</span> PDF</a>
+    <a class="btn btn-solid" href="mailto:oleksandra.fedorenko@yahoo.com">Kontakt</a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="photo-frame">
+      <img src="portrait.jpg" alt="Portrait Oleksandra Fedorenko">
+    </div>
+
+    <div class="avail"><span class="p"></span>Offen für neue Herausforderungen</div>
+
+    <div class="side-block">
+      <div class="side-h">Kontakt</div>
+      <div class="contact-line">
+        <a href="tel:+491603847759">+49 160 3847759</a>
+      </div>
+      <div class="contact-line">
+        <a href="mailto:oleksandra.fedorenko@yahoo.com">oleksandra.fedorenko@yahoo.com</a>
+      </div>
+      <div class="contact-line">
+        <span class="val">61381 Friedrichsdorf-Seulberg</span>
+      </div>
+      <div class="contact-line">
+        <a href="https://www.linkedin.com/in/oleksandra-fedorenko-2946a7149/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Programmiersprachen</div>
+      <ul class="sq-list">
+        <li>TypeScript</li><li>JavaScript</li><li>HTML5</li><li>CSS3</li><li>SASS / SCSS</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Frameworks &amp; Bibliotheken</div>
+      <ul class="sq-list">
+        <li>Angular (v2–20)</li><li>RxJS</li><li>NgRx / Redux / Signal Store</li>
+        <li>SAP Spartacus / Hybris</li><li>Nx Monorepo</li><li>Angular Material</li>
+        <li>Chart.js / ag-Grid</li><li>Bootstrap</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Testing</div>
+      <ul class="sq-list">
+        <li>Jest / Jasmine / Karma</li><li>Playwright</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Werkzeuge &amp; CI/CD</div>
+      <ul class="sq-list">
+        <li>Git</li><li>Jenkins / GitLab CI</li><li>ESLint / Prettier / SonarQube</li>
+        <li>Postman</li><li>Jira</li><li>Figma</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Methoden</div>
+      <ul class="sq-list">
+        <li>Agile / Scrum, Code-Reviews</li><li>TDD</li><li>Clean Code, SOLID</li><li>BEM</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Projekte</div>
+      <div class="proj-mini">
+        <div class="t">E-Commerce-Plattform: Website Redesign</div>
+        <div class="d">Neugestaltung nach Figma, NgRx/Signal Store, Ladezeit &amp; Core Web Vitals optimiert</div>
+      </div>
+      <div class="proj-mini">
+        <div class="t">Prozessmanagement-System: Migration in die Cloud</div>
+        <div class="d">Neue Funktionen, CI mit Jenkins eingerichtet, Modul- &amp; Snapshot-Tests</div>
+      </div>
+      <div class="proj-mini">
+        <div class="t">USIS Transformation &amp; TR Legal Tracker</div>
+        <div class="d">UX-Funktionen umgesetzt, Fehlerbehebung, Jest-/Jasmine-/Karma-Tests</div>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Sprachen</div>
+      <div class="lang-line"><span>Englisch</span><span class="lv">fließend</span></div>
+      <div class="lang-line"><span>Deutsch</span><span class="lv">gute Kenntnisse</span></div>
+      <div class="lang-line"><span>Ukrainisch</span><span class="lv">Muttersprache</span></div>
+      <div class="lang-line"><span>Russisch</span><span class="lv">Muttersprache</span></div>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Zertifikate</div>
+      <div class="cert-line">EPAM AI Literacy Program <span class="yr">(2024)</span></div>
+      <div class="cert-line">EPAM Angular Intermediate <span class="yr">(2022)</span></div>
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <div class="header-band">
+      <h1>Oleksandra Fedorenko</h1>
+      <div class="role">Frontend-Entwicklerin</div>
+    </div>
+
+    <div class="content">
+      <p class="summary reveal">
+        Frontend-Entwicklerin mit über 5 Jahren Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.
+      </p>
+
+      <section class="block reveal" id="erfahrung">
+        <div class="sec-h">Berufserfahrung</div>
+
+        <div class="job">
+          <div class="date">07/2023 – 06/2026</div>
+          <h3>Frontend-Entwicklerin</h3>
+          <div class="org">EPAM Systems Inc., Frankfurt · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <ul class="bullets">
+            <li><strong>E-Commerce-Plattform — Website Redesign:</strong> Neugestaltung und Erweiterung der Website nach Figma-Vorlagen, Entwicklung wiederverwendbarer Komponenten</li>
+            <li>Zustandsverwaltung mit <strong>NgRx / Signal Store</strong>, Migration von Altcode (Legacy) auf moderne Angular-Architektur</li>
+            <li>Integration von REST-Schnittstellen und reaktiven Formularen, Optimierung von Ladezeiten und <strong>Core Web Vitals</strong></li>
+            <li>Direkte Abstimmung mit Design- und Analyseteam</li>
+            <li><strong>Prozessmanagement-System — Migration in die Cloud:</strong> neue Funktionen eigenständig entwickelt, Oberfläche beschleunigt, Continuous Integration mit Jenkins eingerichtet</li>
+            <li>Angular-Grundlagenschulungen und interne Fragerunden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich betreut</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="date">10/2021 – 07/2023</div>
+          <h3>Junior Frontend-Entwicklerin</h3>
+          <div class="org">EPAM Systems Inc., Frankfurt · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <ul class="bullets">
+            <li><strong>USIS Transformation Project:</strong> Fehler analysiert und behoben, Modul- und Snapshot-Tests geschrieben, kleinere UI-Funktionen umgesetzt, Mitwirkung an den Entwicklungsrichtlinien des Projekts</li>
+            <li><strong>TR Legal Tracker &amp; Lösung zur Betrugserkennung:</strong> Fehler in bestehenden Komponenten behoben, Modul- und Snapshot-Tests geschrieben, Komponenten um kleinere Funktionen erweitert</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="date">06/2021 – 10/2021</div>
+          <h3>Praktikantin — EPAM Lab</h3>
+          <div class="org">EPAM Systems Inc., Frankfurt · Ausbildungsprogramm</div>
+          <ul class="bullets">
+            <li>Lernprojekt: Filmplattform (Frontend und Backend) entwickelt, Datenbank eingerichtet und Anwendung bereitgestellt</li>
+            <li>Nach erfolgreichem Abschluss im Oktober 2021 Übernahme in ein Produktivprojekt</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="date">10/2018 – 02/2021</div>
+          <h3>Elternzeit</h3>
+        </div>
+
+        <div class="job">
+          <div class="date">2013 – 05/2018</div>
+          <h3>Architektin / Leitende Architektin</h3>
+          <div class="org">Frühere Laufbahn in Architektur &amp; Bauwesen</div>
+          <ul class="bullets">
+            <li>Architekturentwurf und Projektkoordination, Verantwortung für technische Dokumentation und Visualisierungsprozesse</li>
+            <li>Erfahrung mit <strong>AutoCAD, ArchiCAD, Revit und SketchUp</strong> — Grundlage für strukturiertes Denken, Präzision und das heute auf Software-Interfaces angewendete Gespür für UI-Design</li>
+          </ul>
+          <div class="stackline"><b>Tools:</b> AutoCAD · ArchiCAD · Revit · SketchUp</div>
+        </div>
+      </section>
+
+      <section class="block reveal" id="projekt">
+        <div class="sec-h">Ausgewählte Projekte</div>
+        <div class="proj-card">
+          <h3>E-Commerce-Plattform: Website Redesign</h3>
+          <div class="org">EPAM Systems Inc., Kundenprojekt</div>
+          <ul class="bullets">
+            <li>Website-Relaunch mit <strong>neuem Design und neuer Funktionalität</strong> als Kernaufgabe</li>
+            <li>Umgesetzt mit <strong>Angular 16 und 20</strong> sowie NgRx / Signal Store innerhalb eines Monorepos</li>
+            <li>Integration von REST-APIs, Umsetzung von <strong>Figma</strong>-Designs</li>
+            <li>Arbeit mit reaktiven Formularen (Reactive Forms)</li>
+            <li>Fehlerbehebung und Tests neuer Funktionen mit Jasmine und Karma</li>
+            <li>Team aus Backend-Entwickler:innen, Frontend-Entwickler:innen und QA/Testern</li>
+            <li>Enge Zusammenarbeit mit einem separaten <strong>Kunden-Design-Team</strong> durch laufenden Austausch sowie mit einem BA-Team durch Meetings, Grooming und Planning — das Gesamtteam war <strong>international</strong></li>
+          </ul>
+        </div>
+        <div class="proj-card" style="margin-top:22px;">
+          <h3>Prozessmanagement-System: Migration in die Cloud</h3>
+          <div class="org">EPAM Systems Inc., Kundenprojekt</div>
+          <ul class="bullets">
+            <li>Migration eines IBM-BPM-Systems auf eine moderne, cloudbasierte Lösung (Google Cloud)</li>
+            <li>Neue Funktionen eigenständig entwickelt und die Oberfläche spürbar beschleunigt</li>
+            <li>Continuous Integration mit <strong>Jenkins</strong> eingerichtet</li>
+            <li>Neue Funktionen durch Modul- und Snapshot-Tests abgesichert</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block reveal" id="ausbildung">
+        <div class="sec-h">Ausbildung</div>
+        <div class="edu-item">
+          <div class="date">09/2024 – 07/2027 (voraussichtlich)</div>
+          <h3>B.Sc. Software Engineering</h3>
+          <div class="org">National Technical University of Ukraine, Kyiv · berufsbegleitend</div>
+        </div>
+        <div class="edu-item">
+          <div class="date">02/2021 – 06/2021</div>
+          <h3>Weiterbildung Frontend-Entwicklung</h3>
+          <div class="org">EPAM Systems, externer Weiterbildungskurs</div>
+        </div>
+        <div class="edu-item">
+          <div class="date">09/2011 – 03/2013</div>
+          <h3>M.Sc. Stadtplanung</h3>
+          <div class="org">Nationale Universität Lwiw Polytechnik</div>
+        </div>
+        <div class="edu-item">
+          <div class="date">09/2006 – 07/2011</div>
+          <h3>B.Sc. Architektur</h3>
+          <div class="org">Kyjiw Nationale Universität für Bauwesen und Architektur</div>
+        </div>
+      </section>
+
+      <section class="block reveal" id="tarot-section">
+        <div class="tarot-strip">
+          <div class="txt">
+            <h3>🔮 Noch unentschlossen?</h3>
+            <p>Lassen Sie die Karten entscheiden — eine kurze, augenzwinkernde Tarot-Lesung mit sehr handfesten Argumenten.</p>
+          </div>
+          <button class="btn-tarot" onclick="openTarot()">Karten ziehen</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Oleksandra Fedorenko · <a href="mailto:oleksandra.fedorenko@yahoo.com">oleksandra.fedorenko@yahoo.com</a> · <a href="tel:+491603847759">+49 160 3847759</a> · zuletzt aktualisiert: Oktober 2026
+</footer>
+
+<button class="tarot-fab" onclick="openTarot()" aria-label="Tarot-Lesung öffnen" title="Tarot-Lesung">🔮</button>
+
+<div class="tarot-overlay" id="tarotOverlay" onclick="if(event.target===this) closeTarot()">
+  <div class="tarot-modal">
+    <button class="tarot-close" onclick="closeTarot()" aria-label="Schließen">×</button>
+    <h2 id="tarotTitle">Warum Sie Oleksandra einstellen sollten</h2>
+    <div class="sub" id="tarotSub">Drei Karten aus dem Deck, drei sehr reale Gründe.</div>
+
+    <div class="tarot-question-row">
+      <span class="tarot-input-wrap"><input oninput="toggleClear()" type="text" id="tarotQuestionInput" class="tarot-question-input" placeholder="Stellen Sie den Karten eine Frage …" maxlength="120" onkeydown="if(event.key==='Enter'){ event.preventDefault(); dealCards(); }"><button type="button" class="tarot-clear" id="tarotClear" onclick="clearQuestion()" aria-label="Frage löschen">×</button></span>
+      <button class="tarot-reshuffle" onclick="dealCards()">↻ Karten befragen</button>
+    </div>
+
+
+    <div class="tarot-cards" id="tarotCards"></div>
+
+    <div class="tarot-verdict" id="tarotVerdict">
+      <div class="tarot-question-echo" id="tarotQuestionEcho"></div>
+      <div class="vlabel" id="tarotVerdictLabel">Das Urteil</div>
+      <h3 id="tarotVerdictTitle">Was die Karten zeigen</h3>
+      <p id="tarotVerdictText"></p>
+      <a class="btn btn-solid" id="tarotCta" href="mailto:oleksandra.fedorenko@yahoo.com">Jetzt Kontakt aufnehmen →</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const TAROT_DECK = [
+    {
+      roman: "IV", title: "Der Herrscher", hue: "#d8b76b",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_04_Emperor.jpg",
+      icon: `<circle cx="50" cy="38" r="22" stroke-opacity="0.9"/><path d="M50 16 L50 10 M50 66 L50 60 M28 38 L22 38 M78 38 L72 38 M34 22 L30 18 M70 54 L66 58 M66 22 L70 18 M30 58 L34 54" stroke-linecap="round"/><path d="M22 88 Q50 58 78 88" stroke-opacity="0.85" stroke-linecap="round"/><path d="M34 88 Q50 72 66 88" stroke-opacity="0.6" stroke-linecap="round"/>`,
+      text: "5 Jahre Architektur vor dem Code — Struktur, Präzision und das Auge fürs Detail stecken in jeder Komponente, die sie baut.",
+      kw: "Struktur",
+      rat: "Schaffen Sie Klarheit und feste Strukturen.",
+      read: ["Ein festes Fundament wurde gelegt: Ordnung und Verantwortung prägen Ihren bisherigen Weg.", "Klare Regeln und Struktur tragen Sie jetzt. Wer Ordnung schafft, behält die Führung.", "Stabilität wächst. Was Sie planvoll aufbauen, erhält dauerhaft Bestand."]
+    },
+    {
+      roman: "I", title: "Der Magier", hue: "#8b6fe0",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_01_Magician.jpg",
+      icon: `<path d="M50 12 L58 38 L50 34 L42 38 Z" stroke-linejoin="round"/><line x1="50" y1="34" x2="50" y2="78" stroke-linecap="round"/><path d="M38 88 Q50 78 62 88" stroke-opacity="0.8" stroke-linecap="round"/><path d="M30 24 L36 30 M70 24 L64 30 M22 50 L30 50 M78 50 L70 50" stroke-linecap="round" stroke-opacity="0.7"/><path d="M50 56 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0" stroke-opacity="0.9"/>`,
+      text: "Legacy-Code in moderne Angular-Architektur überführt — schnellere Ladezeiten und solide Tests mit Jest, Jasmine und Karma.",
+      kw: "Willenskraft",
+      rat: "Nutzen Sie Ihre Mittel und handeln Sie bewusst.",
+      read: ["Sie haben Ihre Fähigkeiten entdeckt und gelernt, sie gezielt einzusetzen.", "Alle Mittel liegen bereit. Jetzt gilt es, den Willen in Handeln zu verwandeln.", "Ihr Geschick öffnet eine Tür — wer entschlossen zugreift, gestaltet das Ergebnis."]
+    },
+    {
+      roman: "XIX", title: "Die Sonne", hue: "#e0af68",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_19_Sun.jpg",
+      icon: `<circle cx="50" cy="48" r="16" stroke-opacity="0.9"/><g stroke-linecap="round" stroke-opacity="0.8"><line x1="50" y1="18" x2="50" y2="10"/><line x1="50" y1="78" x2="50" y2="86"/><line x1="20" y1="48" x2="12" y2="48"/><line x1="80" y1="48" x2="88" y2="48"/><line x1="28" y1="26" x2="22" y2="20"/><line x1="72" y1="26" x2="78" y2="20"/><line x1="28" y1="70" x2="22" y2="76"/><line x1="72" y1="70" x2="78" y2="76"/></g>`,
+      text: "Mentorin, Trainerin, Teamplayerin — leitete Angular-Trainings bei EPAM und arbeitet in internationalen, interdisziplinären Teams.",
+      kw: "Klarheit und Zuversicht",
+      rat: "Zeigen Sie sich offen — Zuversicht trägt Sie.",
+      read: ["Eine Zeit der Klarheit und Zuversicht — ein Erfolg wirkt bis heute nach.", "Offenheit und Lebensfreude tragen Sie. Die Dinge zeigen sich, wie sie sind.", "Ein gutes Zeichen: Erfolg, Wärme und Anerkennung kündigen sich an."]
+    },
+    {
+      roman: "XVI", title: "Der Turm", hue: "#c0567a",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_16_Tower.jpg",
+      icon: `<rect x="38" y="20" width="24" height="56" rx="2" stroke-opacity="0.85"/><line x1="38" y1="34" x2="62" y2="34" stroke-opacity="0.6"/><line x1="38" y1="48" x2="62" y2="48" stroke-opacity="0.6"/><line x1="38" y1="62" x2="62" y2="62" stroke-opacity="0.6"/><path d="M50 10 L58 24 L50 20 L42 24 Z" stroke-linejoin="round"/><path d="M28 86 L72 86" stroke-opacity="0.7" stroke-linecap="round"/>`,
+      text: "Core Web Vitals über 20+ Business Units hinweg verbessert — Performance-Transformation im großen Maßstab, kein Einzelfall.",
+      kw: "Umbruch",
+      rat: "Lassen Sie Überholtes los, bevor es Sie bindet.",
+      read: ["Ein Umbruch hat Altes eingerissen — schmerzhaft, aber befreiend.", "Alte Gewissheiten geraten ins Wanken. Lassen Sie los, was nicht mehr trägt.", "Ein plötzlicher Wandel räumt auf; danach lässt sich auf festem Grund neu bauen."]
+    },
+    {
+      roman: "XI", title: "Die Gerechtigkeit", hue: "#6fa88b",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_11_Justice.jpg",
+      icon: `<line x1="50" y1="14" x2="50" y2="80" stroke-linecap="round"/><line x1="24" y1="30" x2="76" y2="30" stroke-linecap="round"/><path d="M24 30 L16 46 L32 46 Z" stroke-linejoin="round"/><path d="M76 30 L68 46 L84 46 Z" stroke-linejoin="round"/><line x1="38" y1="86" x2="62" y2="86" stroke-linecap="round"/>`,
+      text: "Sauberer Code, konsequente Code-Reviews und Tests mit Jest, Jasmine, Karma und Playwright — Qualität ist kein Zufall.",
+      kw: "Gerechtigkeit",
+      rat: "Entscheiden Sie sachlich und ehrlich.",
+      read: ["Eine Entscheidung wurde ehrlich getroffen, ihre Folgen wirken bis heute nach.", "Wägen Sie sachlich ab. Klarheit und Fairness weisen jetzt den Weg.", "Ein gerechter Ausgleich naht: Sorgfalt und Redlichkeit werden belohnt."]
+    },
+    {
+      roman: "XVII", title: "Der Stern", hue: "#7aa2d8",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_17_Star.jpg",
+      icon: `<path d="M50 12 L58 36 L84 36 L63 51 L71 76 L50 61 L29 76 L37 51 L16 36 L42 36 Z" stroke-opacity="0.9"/>`,
+      text: "Lernt nie aus: absolviert seit 2024 berufsbegleitend einen B.Sc. Software Engineering — Ambition mit langem Atem.",
+      kw: "Hoffnung",
+      rat: "Bewahren Sie Vertrauen in Ihren Weg.",
+      read: ["Nach einer schweren Phase kehrte Hoffnung zurück; etwas in Ihnen heilte.", "Vertrauen und Inspiration nähren Sie. Bleiben Sie Ihrem Ziel treu.", "Ein Lichtblick am Horizont: Ihre Wünsche finden einen offenen Himmel."]
+    },
+    {
+      roman: "VI", title: "Die Liebenden", hue: "#d87aa0",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_06_Lovers.jpg",
+      icon: `<circle cx="40" cy="46" r="18" stroke-opacity="0.85"/><circle cx="60" cy="46" r="18" stroke-opacity="0.85"/>`,
+      text: "Enge Zusammenarbeit mit Backend, Design und BA-Teams — internationale, interdisziplinäre Projekte sind ihr Alltag.",
+      kw: "Entscheidung",
+      rat: "Folgen Sie Ihren Werten, nicht dem Druck.",
+      read: ["Eine wichtige Bindung oder Wahl hat Ihre Richtung bestimmt.", "Sie stehen vor einer Wahl. Folgen Sie dem, was Ihren Werten entspricht.", "Eine stimmige Verbindung entsteht — ein Ja, das Herz und Verstand vereint."]
+    },
+    {
+      roman: "X", title: "Das Rad", hue: "#c99a4f",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_10_Wheel_of_Fortune.jpg",
+      icon: `<circle cx="50" cy="50" r="30" stroke-opacity="0.9"/><circle cx="50" cy="50" r="6" stroke-opacity="0.9"/><line x1="50" y1="20" x2="50" y2="30" stroke-linecap="round"/><line x1="50" y1="70" x2="50" y2="80" stroke-linecap="round"/><line x1="20" y1="50" x2="30" y2="50" stroke-linecap="round"/><line x1="70" y1="50" x2="80" y2="50" stroke-linecap="round"/><line x1="29" y1="29" x2="36" y2="36" stroke-linecap="round"/><line x1="64" y1="64" x2="71" y2="71" stroke-linecap="round"/><line x1="71" y1="29" x2="64" y2="36" stroke-linecap="round"/><line x1="36" y1="64" x2="29" y2="71" stroke-linecap="round"/>`,
+      text: "Vom Architekturbüro zur Softwareentwicklung — ein mutiger Kurswechsel, der sich in fünf Jahren Praxis bewährt hat.",
+      kw: "Wandel",
+      rat: "Bleiben Sie beweglich — der Moment wandelt sich.",
+      read: ["Das Rad hat sich gedreht: Ein Wendepunkt hat Ihr Leben neu ausgerichtet.", "Die Dinge sind in Bewegung. Nutzen Sie den Moment, bevor das Rad weiterdreht.", "Das Glück wendet sich. Ein neuer Zyklus beginnt."]
+    }
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  const POSITIONS = ["Vergangenheit", "Gegenwart", "Zukunft"];
+
+  function cardHTML(card, idx, reading){
+    return `
+      <div class="tcard" data-idx="${idx}" onclick="flipCard(this)">
+        <div class="tcard-inner">
+          <div class="tcard-face tcard-back">
+            <svg viewBox="0 0 100 100" fill="none" stroke="#d8b76b" stroke-width="1.4">
+              <circle cx="50" cy="50" r="44" stroke-opacity="0.55"/>
+              <circle cx="50" cy="50" r="36" stroke-opacity="0.35"/>
+              <path d="M50 20 L58 44 L84 44 L63 58 L71 82 L50 67 L29 82 L37 58 L16 44 L42 44 Z" stroke-opacity="0.8"/>
+              <circle cx="50" cy="50" r="4" fill="#d8b76b" stroke="none"/>
+            </svg>
+            <div class="klabel">${POSITIONS[idx] || 'Karte ' + (idx+1)}</div>
+          </div>
+          <div class="tcard-face tcard-front">
+            <div class="tcard-roman">${POSITIONS[idx] || ''} · ${card.roman}</div>
+            <div class="tcard-art">
+              <img src="${card.img}" alt="${card.title}" loading="lazy"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="tcard-medallion" style="display:none; background:radial-gradient(circle, ${card.hue}33, transparent 72%);">
+                <svg viewBox="0 0 100 100" fill="none" stroke="${card.hue}" stroke-width="2.2">${card.icon}</svg>
+              </div>
+            </div>
+            <h4>${card.title}</h4>
+            <p>${reading ? (card.read[idx] || card.read[1]) : card.text}</p>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function toggleClear(){
+    const i=document.getElementById('tarotQuestionInput'), c=document.getElementById('tarotClear');
+    if(i && c) c.classList.toggle('show', i.value.length>0);
+  }
+  function clearQuestion(){
+    const i=document.getElementById('tarotQuestionInput');
+    if(i){ i.value=''; i.focus(); }
+    toggleClear();
+  }
+
+  function dealCards(){
+    const picks = shuffle(TAROT_DECK).slice(0,3);
+    const input = document.getElementById('tarotQuestionInput');
+    const echo = document.getElementById('tarotQuestionEcho');
+    const question = input ? input.value.trim() : '';
+    if(input){ input.value = ''; toggleClear(); }
+    document.getElementById('tarotCards').innerHTML = picks.map((c,i)=>cardHTML(c,i,!!question)).join('');
+    document.getElementById('tarotVerdict').classList.remove('show');
+    document.getElementById('tarotTitle').textContent = question ? 'Die Tarot-Legung' : 'Warum Sie Oleksandra einstellen sollten';
+    document.getElementById('tarotSub').textContent = question
+      ? 'Drei Karten für Ihre Frage: Vergangenheit, Gegenwart, Zukunft.'
+      : 'Drei Karten aus dem Deck, drei sehr reale Gründe.';
+    echo.textContent = question ? '✦ Ihre Frage: „' + question + '“' : '✦';
+    echo.style.visibility = question ? 'visible' : 'hidden';
+
+    const [p1,p2,p3] = picks;
+    document.getElementById('tarotVerdictLabel').textContent = question ? 'Die Deutung' : 'Das Urteil';
+    document.getElementById('tarotVerdictTitle').textContent = question ? 'Die Deutung zu Ihrer Frage' : 'Einstellungsempfehlung: eindeutig.';
+    document.getElementById('tarotVerdictText').textContent = question
+      ? 'Die Karten zeigen einen Weg von ' + p1.kw + ' (' + p1.title + ') über ' + p2.kw + ' (' + p2.title + ') zu ' + p3.kw + ' (' + p3.title + '). Rat der Gegenwartskarte: ' + p2.rat + ' Karten weisen Tendenzen, keine Gewissheiten — entscheiden Sie selbst.'
+      : 'Egal welche drei Karten fallen — die Fakten bleiben dieselben: solides Handwerk, messbare Ergebnisse, echte Teamarbeit.';
+    document.getElementById('tarotVerdict').classList.toggle('reading', !!question);
+
+    autoRevealCards();
+  }
+
+  function autoRevealCards(){
+    const cards = Array.from(document.querySelectorAll('.tcard'));
+    cards.forEach((card, i)=>{
+      setTimeout(()=>{
+        card.classList.add('flipped');
+        if(i === cards.length - 1){
+          setTimeout(()=>{ document.getElementById('tarotVerdict').classList.add('show'); }, 500);
+        }
+      }, 600 + i*550);
+    });
+  }
+
+  function openTarot(){
+    dealCards();
+    document.getElementById('tarotOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTarot(){
+    document.getElementById('tarotOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('tarotCards').innerHTML = '';
+    document.getElementById('tarotVerdict').classList.remove('show');
+    const input = document.getElementById('tarotQuestionInput');
+    if(input) input.value = '';
+    toggleClear();
+    const echo = document.getElementById('tarotQuestionEcho');
+    if(echo){ echo.textContent = ''; }
+  }
+  function flipCard(el){
+    el.classList.add('flipped');
+    const all = document.querySelectorAll('.tcard');
+    const allFlipped = Array.from(all).every(c => c.classList.contains('flipped'));
+    if(allFlipped){
+      setTimeout(()=>{ document.getElementById('tarotVerdict').classList.add('show'); }, 400);
+    }
+  }
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeTarot(); });
+</script>
+
+</body>
+</html>
