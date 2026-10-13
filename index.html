@@ -14,36 +14,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    
-    --bg:#f6f0e4;
-    --bg-soft:#ece3d2;
-    --bg-elevated:#fffaf0;
-    --border:#d6c9b0;
-    --border-soft:#e4d9c3;
+    --bg:#eadfca;
+    --bg-soft:#e0d3ba;
+    --bg-elevated:#f5eddd;
+    --border:#cdbd9f;
+    --border-soft:#d8cab0;
     --ink:#241d33;
-    --muted:#5b5369;
+    --muted:#564d5a;
     --faint:#8b8398;
-    --label:#6a4fb3;
+    --label:#2f6f73;
     --sage:#8fb9ab;
     --rose:#c98fa0;
     --peri:#8fa0c9;
     --peach:#d2a878;
     --gold:#d8b76b;
     --gold-soft:rgba(216,183,107,0.12);
-    --mystic:#8b6fe0;
-    --mystic-deep:#4b3a86;
-    --good:#17855a;
+    --mystic:#3f9aa0;
+    --mystic-deep:#1f5c62;
+    --good:#9a6b2c;
     --accent:#9a7a3f;
     --accent-soft:rgba(154,122,63,0.1);
     --accent-deep:#7d6130;
-    --night:#1d1530;
-    --night-2:#2a2044;
+    --night:#2a1c14;
+    --night-2:#3c2a1d;
     --radius:8px;
   }
   /* tarot modal keeps the dark "mystic" palette */
   .tarot-overlay{
-    --bg:#15171d; --bg-soft:#1a1c23; --bg-elevated:#20232b; --border:#2e323c; --border-soft:#262932;
-    --ink:#edeff2; --muted:#9aa0ab; --faint:#656a75; --label:#c9a876; --accent:#c9a876; --good:#34d399;
+    --bg:#1c1410; --bg-soft:#231a14; --bg-elevated:#2c2119; --border:#43332a; --border-soft:#382a21;
+    --ink:#f3ece0; --muted:#b8a998; --faint:#85766a; --label:#d8b76b; --accent:#d8b76b; --good:#34d399;
     color:var(--ink);
   }
   .tarot-overlay .btn-solid:hover{ background:#fff; }
@@ -100,14 +99,15 @@
     background-size:180% 180%; background-position:0% 50%;
     padding:9px 17px; border-radius:30px; border:none; cursor:pointer;
     display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
-    box-shadow:0 0 0 1px rgba(216,183,107,0.3), 0 4px 16px rgba(139,111,224,0.28);
+    box-shadow:0 0 0 1px rgba(216,183,107,0.3), 0 4px 16px rgba(63,154,160,0.28);
     transition:background-position .4s ease, transform .15s ease, box-shadow .15s ease;
   }
-  .btn-tarot-nav:hover{ background-position:100% 50%; transform:translateY(-1px); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 6px 20px rgba(139,111,224,0.4); }
+  .btn-tarot-nav:hover{ background-position:100% 50%; transform:translateY(-1px); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 6px 20px rgba(63,154,160,0.4); }
 
   /* ---------- layout ---------- */
   .layout{ display:grid; grid-template-columns:328px 1fr; align-items:stretch; max-width:1280px; margin:0 auto; }
-  @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+  @media (max-width:900px){ .layout{ grid-template-columns:1fr; } .main-col{ order:-1; } }
+  @media (max-width:640px){ .topbar{ padding:0 14px; } .topbar .name{ display:none; } .topbar .actions{ margin-left:auto; } }
 
   /* ---------- sidebar ---------- */
   .sidebar{
@@ -116,8 +116,37 @@
     border-right:1px solid var(--border-soft);
   }
 
-  .photo-frame{ margin:-28px -26px 24px; position:relative; overflow:hidden; }
-  @media (max-width:900px){ .photo-frame{ max-width:360px; margin:-28px auto 24px; } }
+  .hero-wrap{ max-width:1280px; margin:0 auto; }
+  .hero-wrap .header-band{ display:flex; align-items:center; min-height:392px; padding:54px 360px 54px 48px; }
+  .hero-photo{
+    position:absolute; right:0; top:0; bottom:0; width:340px; pointer-events:none;
+    -webkit-mask-image:linear-gradient(to left, #000 55%, transparent 100%);
+            mask-image:linear-gradient(to left, #000 55%, transparent 100%);
+  }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:50% 0%; display:block; }
+  .hero-text{ position:relative; z-index:1; }
+  .hero-wrap .header-band{ border-bottom:1px solid rgba(216,183,107,0.3); }
+  @media (max-width:900px){ .hero-wrap .header-band{ padding:54px 300px 54px 48px; min-height:320px; } .hero-photo{ width:290px; } }
+  @media (max-width:640px){
+    .hero-wrap .header-band{ flex-direction:column; align-items:flex-start; padding:0 26px 40px; min-height:0; }
+    .hero-photo{ position:relative; width:100%; max-width:300px; height:300px; margin:0 0 -40px -26px;
+      -webkit-mask-image:radial-gradient(ellipse closest-side at 50% 50%, #000 62%, transparent 100%); mask-image:radial-gradient(ellipse closest-side at 50% 50%, #000 62%, transparent 100%); }
+  }
+  .contact-strip{
+    background:var(--bg-soft);
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 24px;
+    padding:14px 40px;
+  }
+  .contact-strip .avail{ margin:0; font-size:12.5px; color:#17855a; white-space:nowrap; }
+  .contact-strip .avail .p{ background:#17855a; box-shadow:0 0 8px #17855a; }
+  .c-item{ display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--ink); text-decoration:none; min-width:0; }
+  .c-item svg{ width:16px; height:16px; flex-shrink:0; stroke:var(--accent); fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  a.c-item:hover{ color:var(--accent); }
+  @media (max-width:1100px){ .contact-strip{ justify-content:flex-start; gap:8px 28px; } .contact-strip .avail{ flex-basis:100%; } }
+  @media (max-width:640px){
+    .contact-strip{ padding:16px 26px; flex-direction:column; align-items:flex-start; gap:10px; }
+    .c-item{ overflow-wrap:anywhere; }
+  }
   .photo-frame img{
     width:100%; aspect-ratio:410/488; object-fit:cover; display:block;
     
@@ -241,9 +270,9 @@
     background:linear-gradient(120deg, var(--gold), #f0d79a 50%, var(--mystic));
     padding:12px 22px; border-radius:30px; border:none; cursor:pointer;
     display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
-    box-shadow:0 4px 18px rgba(139,111,224,0.3); transition:transform .15s, box-shadow .15s;
+    box-shadow:0 4px 18px rgba(63,154,160,0.3); transition:transform .15s, box-shadow .15s;
   }
-  .btn-tarot:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(139,111,224,0.4); }
+  .btn-tarot:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(63,154,160,0.4); }
 
   footer{
     text-align:center; padding:30px 20px; background:var(--bg-soft); color:var(--faint);
@@ -253,18 +282,18 @@
   footer a:hover{ text-decoration:underline; }
 
   /* ---------- tarot "night" accents: topbar, header band, teaser strip, footer ---------- */
-  .topbar{ background:rgba(29,21,48,0.95); border-bottom:1px solid rgba(216,183,107,0.28); }
+  .topbar{ background:rgba(38,25,17,0.95); border-bottom:1px solid rgba(216,183,107,0.28); }
   .topbar .name{ color:#f6f0e4; }
-  .topbar nav a{ color:#c4bad9; }
+  .topbar nav a{ color:#dccbb2; }
   .topbar nav a:hover{ color:#fff; }
   .topbar .btn-line{ border-color:rgba(246,240,228,0.3); color:#f6f0e4; }
   .topbar .btn-line:hover{ border-color:var(--gold); color:var(--gold); }
-  .topbar .btn-solid{ background:var(--gold); color:#1d1530; }
+  .topbar .btn-solid{ background:var(--gold); color:#2a1c14; }
   .topbar .btn-solid:hover{ background:#f0d79a; }
   .header-band{
     background-color:var(--night);
     background-image:
-      radial-gradient(500px 220px at 85% 0%, rgba(139,111,224,0.38), transparent 70%),
+      radial-gradient(500px 220px at 85% 0%, rgba(63,154,160,0.38), transparent 70%),
       radial-gradient(rgba(216,183,107,0.16) 1px, transparent 1px);
     background-size:auto, 24px 24px;
     border-bottom:1px solid rgba(216,183,107,0.3);
@@ -276,8 +305,8 @@
     background:linear-gradient(135deg, var(--night-2), var(--night)); border-color:rgba(216,183,107,0.3);
   }
   .tarot-strip .txt h3{ color:#f6f0e4; }
-  .tarot-strip .txt p{ color:#c4bad9; }
-  footer{ background:var(--night); color:#a89fbf; border-top:1px solid rgba(216,183,107,0.28); }
+  .tarot-strip .txt p{ color:#dccbb2; }
+  footer{ background:var(--night); color:#bda98f; border-top:1px solid rgba(216,183,107,0.28); }
   footer a{ color:var(--gold); }
 
   /* ================= TAROT MODAL ================= */
@@ -288,7 +317,7 @@
   .tarot-overlay.open{ display:flex; }
   .tarot-modal{
     background:
-      radial-gradient(500px 240px at 15% -10%, rgba(139,111,224,0.22), transparent 60%),
+      radial-gradient(500px 240px at 15% -10%, rgba(63,154,160,0.22), transparent 60%),
       radial-gradient(400px 220px at 100% 110%, rgba(216,183,107,0.12), transparent 60%),
       var(--bg-soft);
     border:1px solid var(--border); border-radius:16px; max-width:720px; width:100%; max-height:92vh; overflow-y:auto;
@@ -323,14 +352,14 @@
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;
   }
   .tcard-back{
-    background:linear-gradient(160deg, #241c3a, #140f20);
+    background:linear-gradient(160deg, #1e3a3d, #0f1f21);
     border:1px solid rgba(216,183,107,0.35);
-    box-shadow:inset 0 0 0 1px rgba(216,183,107,0.12), inset 0 0 40px rgba(139,111,224,0.12);
+    box-shadow:inset 0 0 0 1px rgba(216,183,107,0.12), inset 0 0 40px rgba(63,154,160,0.12);
   }
   .tcard-back svg{ width:44px; height:44px; margin-bottom:6px; }
   .tcard-back .klabel{ font-family:'Manrope'; font-weight:700; font-size:11px; color:var(--gold); letter-spacing:.04em; }
   .tcard-front{
-    background:linear-gradient(175deg, var(--bg-elevated), #15121f);
+    background:linear-gradient(175deg, var(--bg-elevated), #141b1c);
     border:1px solid var(--border); transform:rotateY(180deg); justify-content:flex-start; padding-top:12px;
     box-shadow:inset 0 0 0 1px rgba(216,183,107,0.18);
   }
@@ -404,10 +433,10 @@
     background:linear-gradient(160deg, #2a2d38, #1b1d24);
     display:flex; align-items:center; justify-content:center;
     font-size:26px; line-height:1;
-    box-shadow:0 0 0 1px rgba(216,183,107,0.18), 0 10px 28px rgba(139,111,224,0.4);
+    box-shadow:0 0 0 1px rgba(216,183,107,0.18), 0 10px 28px rgba(63,154,160,0.4);
     transition:transform .2s ease, box-shadow .2s ease;
   }
-  .tarot-fab:hover{ transform:translateY(-3px) scale(1.05); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 14px 34px rgba(139,111,224,0.55); }
+  .tarot-fab:hover{ transform:translateY(-3px) scale(1.05); box-shadow:0 0 0 1px rgba(216,183,107,0.5), 0 14px 34px rgba(63,154,160,0.55); }
   @media (max-width:640px){ .tarot-fab{ width:52px; height:52px; right:16px; bottom:16px; font-size:22px; } }
 </style>
 </head>
@@ -427,30 +456,26 @@
   </div>
 </header>
 
+<div class="hero-wrap">
+    <div class="header-band">
+    <div class="hero-photo"><img src="portrait-linkedin.jpg" alt="Oleksandra Fedorenko"></div>
+    <div class="hero-text">
+    <h1>Oleksandra Fedorenko</h1>
+    <div class="role">Frontend-Entwicklerin</div>
+    </div>
+  </div>
+  <div class="contact-strip">
+    <div class="avail"><span class="p"></span>Offen für neue Herausforderungen</div>
+    <a class="c-item" href="tel:+491603847759"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>+49 160 3847759</a>
+    <a class="c-item" href="mailto:oleksandra.fedorenko@yahoo.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>oleksandra.fedorenko@yahoo.com</a>
+    <div class="c-item"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>61381 Friedrichsdorf-Seulberg</div>
+    <a class="c-item" href="https://www.linkedin.com/in/oleksandra-fedorenko-2946a7149/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5m0 2.5a2.5 2.5 0 0 1 5 0V16"/></svg>LinkedIn</a>
+  </div>
+</div>
+</div>
+
 <div class="layout">
   <aside class="sidebar">
-    <div class="photo-frame">
-      <img src="portrait.jpg" alt="Portrait Oleksandra Fedorenko">
-    </div>
-
-    <div class="avail"><span class="p"></span>Offen für neue Herausforderungen</div>
-
-    <div class="side-block">
-      <div class="side-h">Kontakt</div>
-      <div class="contact-line">
-        <a href="tel:+491603847759">+49 160 3847759</a>
-      </div>
-      <div class="contact-line">
-        <a href="mailto:oleksandra.fedorenko@yahoo.com">oleksandra.fedorenko@yahoo.com</a>
-      </div>
-      <div class="contact-line">
-        <span class="val">61381 Friedrichsdorf-Seulberg</span>
-      </div>
-      <div class="contact-line">
-        <a href="https://www.linkedin.com/in/oleksandra-fedorenko-2946a7149/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-    </div>
-
     <div class="side-block">
       <div class="side-h">Programmiersprachen</div>
       <ul class="sq-list">
@@ -521,11 +546,6 @@
   </aside>
 
   <div class="main-col">
-    <div class="header-band">
-      <h1>Oleksandra Fedorenko</h1>
-      <div class="role">Frontend-Entwicklerin</div>
-    </div>
-
     <div class="content">
       <p class="summary reveal">
         Frontend-Entwicklerin mit über 5 Jahren Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.
@@ -697,7 +717,7 @@
       read: ["Ein festes Fundament wurde gelegt: Ordnung und Verantwortung prägen Ihren bisherigen Weg.", "Klare Regeln und Struktur tragen Sie jetzt. Wer Ordnung schafft, behält die Führung.", "Stabilität wächst. Was Sie planvoll aufbauen, erhält dauerhaft Bestand."]
     },
     {
-      roman: "I", title: "Der Magier", hue: "#8b6fe0",
+      roman: "I", title: "Der Magier", hue: "#3f9aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_01_Magician.jpg",
       icon: `<path d="M50 12 L58 38 L50 34 L42 38 Z" stroke-linejoin="round"/><line x1="50" y1="34" x2="50" y2="78" stroke-linecap="round"/><path d="M38 88 Q50 78 62 88" stroke-opacity="0.8" stroke-linecap="round"/><path d="M30 24 L36 30 M70 24 L64 30 M22 50 L30 50 M78 50 L70 50" stroke-linecap="round" stroke-opacity="0.7"/><path d="M50 56 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0" stroke-opacity="0.9"/>`,
       text: "Legacy-Code in moderne Angular-Architektur überführt — schnellere Ladezeiten und solide Tests mit Jest, Jasmine und Karma.",
