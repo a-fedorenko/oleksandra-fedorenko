@@ -11,7 +11,7 @@
 <meta property="og:locale" content="de_DE">
 <title>Oleksandra Fedorenko — Frontend-Entwicklerin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#eadfca;
@@ -228,7 +228,7 @@
 
   .job{ margin-bottom:38px; }
   .job:last-child{ margin-bottom:0; }
-  .job .date{ font-size:13px; color:var(--faint); font-weight:600; margin-bottom:6px; letter-spacing:.02em; }
+  .job .date{ font-family:'IBM Plex Mono'; font-size:12px; color:var(--faint); font-weight:500; margin-bottom:6px; letter-spacing:.1em; }
   .job h3{ font-size:19px; font-weight:700; margin-bottom:3px; color:var(--ink); }
   .job .org{ font-style:italic; font-size:14px; color:var(--muted); margin-bottom:14px; }
   .job .org a{ color:var(--accent); text-decoration:none; }
@@ -252,7 +252,7 @@
 
   .edu-item{ margin-bottom:24px; }
   .edu-item:last-child{ margin-bottom:0; }
-  .edu-item .date{ font-size:13px; color:var(--faint); font-weight:600; margin-bottom:4px; }
+  .edu-item .date{ font-family:'IBM Plex Mono'; font-size:12px; color:var(--faint); font-weight:500; margin-bottom:4px; letter-spacing:.1em; }
   .edu-item h3{ font-size:17px; font-weight:700; margin-bottom:2px; color:var(--ink); }
   .edu-item .org{ font-style:italic; font-size:14px; color:var(--muted); }
 
@@ -286,6 +286,7 @@
   .topbar .name{ color:#f6f0e4; }
   .topbar nav a{ color:#dccbb2; }
   .topbar nav a:hover{ color:#fff; }
+  .topbar .name, .topbar nav a, .topbar .actions .btn{ font-family:'IBM Plex Mono'; text-transform:uppercase; font-size:12.5px; letter-spacing:0.14em; font-weight:500; }
   .topbar .btn-line{ border-color:rgba(246,240,228,0.3); color:#f6f0e4; }
   .topbar .btn-line:hover{ border-color:var(--gold); color:var(--gold); }
   .topbar .btn-solid{ background:var(--gold); color:#2a1c14; }
@@ -357,7 +358,7 @@
     box-shadow:inset 0 0 0 1px rgba(216,183,107,0.12), inset 0 0 40px rgba(63,154,160,0.12);
   }
   .tcard-back svg{ width:44px; height:44px; margin-bottom:6px; }
-  .tcard-back .klabel{ font-family:'Manrope'; font-weight:700; font-size:11px; color:var(--gold); letter-spacing:.04em; }
+  .tcard-back .klabel{ font-family:'IBM Plex Mono'; font-weight:500; font-size:10.5px; text-transform:uppercase; color:var(--gold); letter-spacing:.12em; }
   .tcard-front{
     background:linear-gradient(175deg, var(--bg-elevated), #141b1c);
     border:1px solid var(--border); transform:rotateY(180deg); justify-content:flex-start; padding-top:12px;
@@ -365,7 +366,7 @@
   }
   .tcard-front svg{ width:40px; height:40px; margin-bottom:5px; }
   .tcard-front h4{
-    font-family:'Manrope'; font-size:12.5px; color:var(--gold); margin-bottom:5px; letter-spacing:0.02em;
+    font-family:'IBM Plex Mono'; font-weight:500; font-size:11px; text-transform:uppercase; color:var(--gold); margin-bottom:5px; letter-spacing:0.1em;
   }
   .tcard-front p{
     font-size:11px; color:var(--muted); line-height:1.4;
@@ -419,7 +420,7 @@
   .tarot-verdict.reading p{ min-height:calc(5em + 53px); margin-bottom:0; }
   .tarot-verdict.show{ opacity:1; visibility:visible; }
   .tarot-verdict .vlabel{
-    font-family:'Manrope'; font-weight:800; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
     color:var(--gold); margin-bottom:6px;
   }
   .tarot-verdict h3{ font-size:16px; color:#fff; margin-bottom:7px; }
