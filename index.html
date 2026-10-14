@@ -116,17 +116,20 @@
     border-right:1px solid var(--border);
   }
 
-  .hero-wrap{ max-width:1120px; margin:0 auto; }
-  .hero-wrap .header-band{ display:flex; align-items:center; min-height:392px; padding:54px 360px 54px 48px; }
+  .hero-wrap{ --g:max(0px, calc((100vw - 1120px) / 2)); }
+  .hero-wrap .header-band{ display:flex; align-items:center; min-height:392px; padding:54px calc(var(--g) + 400px) 54px calc(var(--g) + 48px); }
   .hero-photo{
-    position:absolute; right:0; top:0; bottom:0; width:340px; pointer-events:none;
-    -webkit-mask-image:linear-gradient(to left, #000 55%, transparent 100%);
-            mask-image:linear-gradient(to left, #000 55%, transparent 100%);
+    position:absolute; right:calc(var(--g) + 20px); top:0; bottom:0; width:340px; pointer-events:none;
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 22%, #000 100%);
+            mask-image:linear-gradient(to right, transparent 0, #000 22%, #000 100%);
   }
+  .hero-photo::after{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 46% 26% at 100% 0%, #3a281d 0%, #3a281d 40%, rgba(58,40,29,0.55) 70%, rgba(58,40,29,0) 100%); }
+  @media (max-width:640px){ .hero-photo::after{ display:none; } }
   .hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:50% 0%; display:block; }
   .hero-text{ position:relative; z-index:1; }
   .hero-wrap .header-band{ border-bottom:1px solid rgba(216,183,107,0.3); }
-  @media (max-width:900px){ .hero-wrap .header-band{ padding:54px 300px 54px 48px; min-height:320px; } .hero-photo{ width:290px; } }
+  @media (max-width:900px){ .hero-wrap .header-band{ padding:54px 300px 54px 40px; min-height:320px; } .hero-photo{ width:290px; right:20px; } }
   @media (max-width:640px){
     .hero-wrap .header-band{ flex-direction:column; align-items:flex-start; padding:0 26px 40px; min-height:0; }
     .hero-photo{ position:relative; width:100%; max-width:300px; height:300px; margin:0 0 -40px -26px;
@@ -135,7 +138,7 @@
   .contact-strip{
     background:transparent; border-bottom:1px solid var(--border);
     display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 24px;
-    padding:14px 40px;
+    padding:14px calc(var(--g) + 40px);
   }
   .contact-strip .avail{ margin:0; font-size:12.5px; color:#3f7a55; white-space:nowrap; }
   .contact-strip .avail .p{ background:#3f7a55; box-shadow:0 0 8px #3f7a55; }
@@ -315,6 +318,40 @@
   @keyframes tfxBob{ 0%,100%{ transform:translateY(0) rotate(0);} 50%{ transform:translateY(-2px) rotate(-6deg);} }
   @keyframes tfxTwinkle{ 0%,100%{ opacity:0; transform:scale(.4) rotate(0);} 40%,60%{ opacity:1; transform:scale(1) rotate(25deg);} }
   @media (prefers-reduced-motion:reduce){ .tarot-fx::before,.tarot-fx .hero-tarot::after,.tarot-fx .orb,.tarot-fx .st{ animation:none; } .tarot-fx .st{ opacity:.7; } }
+  /* hero call-to-actions */
+  @media (max-width:860px){ .topbar{ display:none; } }
+  .hero-cta{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 14px; }
+  .hero-cta .btn-primary{ font-family:'IBM Plex Mono'; font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; color:#2a1c14; background:#f6f0e4; padding:10px 20px; border-radius:30px; transition:background .2s, transform .15s; }
+  .hero-cta .btn-primary:hover{ background:#fff; transform:translateY(-1px); }
+  .hero-cta .btn-secondary{ font-family:'IBM Plex Mono'; font-size:12px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; color:#f6f0e4; border:1px solid rgba(246,240,228,0.4); padding:9px 18px; border-radius:30px; transition:border-color .2s, color .2s; }
+  .hero-cta .btn-secondary:hover{ border-color:var(--gold); color:var(--gold); }
+  /* contrast fixes (WCAG AA on beige) */
+  :root{ --faint:#665e50; --label:#25666a; --accent:#7a5f2c; }
+  .contact-strip .avail{ color:#2f6b46; }
+  .contact-strip .avail .p{ background:#2f6b46; box-shadow:0 0 8px #2f6b46; }
+  /* refined hero buttons: equal height, calm hierarchy */
+  .hero-cta{ gap:12px; }
+  .hero-cta .btn-primary, .hero-cta .btn-secondary, .hero-cta .hero-tarot{
+    box-sizing:border-box; height:44px; padding:0 22px; border-radius:8px;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; line-height:1;
+  }
+  .hero-cta .btn-primary{ background:var(--gold); color:#2a1c14; font-weight:600; border:1px solid var(--gold); }
+  .hero-cta .btn-primary:hover{ background:#e6c987; border-color:#e6c987; transform:translateY(-1px); }
+  .hero-cta .btn-secondary{ background:transparent; color:#f6f0e4; font-weight:500; border:1px solid rgba(246,240,228,0.4); }
+  .hero-cta .btn-secondary:hover{ border-color:var(--gold); color:var(--gold); }
+  .hero-cta .hero-tarot{ background:rgba(216,183,107,0.10); color:var(--gold); font-weight:600; border:1px solid rgba(216,183,107,0.6); box-shadow:none; background-image:none; }
+  .hero-cta .hero-tarot:hover{ background:rgba(216,183,107,0.2); border-color:var(--gold); transform:translateY(-1px); box-shadow:0 6px 20px rgba(216,183,107,0.2); }
+  .tarot-fx::before{ border-radius:14px; }
+  /* bottom tarot CTA = same style as the hero tarot button */
+  .tarot-strip .hero-tarot{
+    box-sizing:border-box; height:44px; padding:0 22px; border-radius:8px;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'IBM Plex Mono'; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; line-height:1;
+    background:rgba(216,183,107,0.10); background-image:none; color:var(--gold); border:1px solid rgba(216,183,107,0.6); box-shadow:none;
+  }
+  .tarot-strip .hero-tarot:hover{ background:rgba(216,183,107,0.2); border-color:var(--gold); transform:translateY(-1px); box-shadow:0 6px 20px rgba(216,183,107,0.2); }
+  .tarot-strip .tarot-fx::before{ border-radius:14px; }
   .hero-summary{ font-size:14.5px; line-height:1.65; color:#d9ccb8; max-width:54ch; margin:18px 0 22px; }
   .topbar .btn-line{ border-color:rgba(246,240,228,0.3); color:#f6f0e4; }
   .topbar .btn-line:hover{ border-color:var(--gold); color:var(--gold); }
@@ -323,9 +360,8 @@
   .header-band{
     background-color:#3a281d;
     background-image:
-      radial-gradient(500px 220px at 85% 0%, rgba(63,154,160,0.38), transparent 70%),
       radial-gradient(rgba(216,183,107,0.16) 1px, transparent 1px);
-    background-size:auto, 24px 24px;
+    background-size:24px 24px;
     border-bottom:1px solid rgba(216,183,107,0.3);
     color:#f6f0e4;
   }
@@ -484,10 +520,6 @@
     <a class="navlink" href="#projekt">Projekt</a>
     <a class="navlink" href="#ausbildung">Ausbildung</a>
   </nav>
-  <div class="actions">
-    <a class="btn btn-line" href="Oleksandra_Fedorenko_CV.pdf" target="_blank" rel="noopener"><span class="full">Lebenslauf</span> PDF</a>
-    <a class="btn btn-solid" href="mailto:oleksandra.fedorenko@yahoo.com">Kontakt</a>
-  </div>
 </header>
 
 <div class="hero-wrap">
@@ -496,8 +528,8 @@
     <div class="hero-text">
     <h1>Oleksandra Fedorenko</h1>
     <div class="role">Frontend-Entwicklerin</div>
-    <p class="hero-summary">Frontend-Entwicklerin mit über 5 Jahren Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.</p>
-    <div class="tarot-fx"><i class="st s1">✦</i><i class="st s2">✧</i><i class="st s3">✦</i><i class="st s4">·</i><button class="btn-tarot-nav hero-tarot" onclick="openTarot()"><span class="orb">🔮</span> Tarot-Lesung</button></div>
+    <p class="hero-summary">Über 5 Jahre Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.</p>
+    <div class="hero-cta"><a class="btn-primary" href="mailto:oleksandra.fedorenko@yahoo.com">Kontakt aufnehmen</a><a class="btn-secondary" href="Oleksandra_Fedorenko_CV.pdf" target="_blank" rel="noopener">Lebenslauf PDF</a><div class="tarot-fx"><i class="st s1">✦</i><i class="st s2">✧</i><i class="st s3">✦</i><i class="st s4">·</i><button class="btn-tarot-nav hero-tarot" onclick="openTarot()"><span class="orb">🔮</span> Tarot-Lesung</button></div></div>
     </div>
   </div>
   <div class="contact-strip">
@@ -551,22 +583,6 @@
     </div>
 
     <div class="side-block">
-      <div class="side-h">Projekte</div>
-      <div class="proj-mini">
-        <div class="t">E-Commerce-Plattform: Website Redesign</div>
-        <div class="d">Neugestaltung nach Figma, NgRx/Signal Store, Ladezeit &amp; Core Web Vitals optimiert</div>
-      </div>
-      <div class="proj-mini">
-        <div class="t">Prozessmanagement-System: Migration in die Cloud</div>
-        <div class="d">Neue Funktionen, CI mit Jenkins eingerichtet, Modul- &amp; Snapshot-Tests</div>
-      </div>
-      <div class="proj-mini">
-        <div class="t">USIS Transformation &amp; TR Legal Tracker</div>
-        <div class="d">UX-Funktionen umgesetzt, Fehlerbehebung, Jest-/Jasmine-/Karma-Tests</div>
-      </div>
-    </div>
-
-    <div class="side-block">
       <div class="side-h">Sprachen</div>
       <div class="lang-line"><span>Englisch</span><span class="lv">fließend</span></div>
       <div class="lang-line"><span>Deutsch</span><span class="lv">gute Kenntnisse</span></div>
@@ -592,11 +608,10 @@
           <h3>Frontend-Entwicklerin</h3>
           <div class="org">EPAM Systems Inc., Frankfurt · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
           <ul class="bullets">
-            <li><strong>E-Commerce-Plattform — Website Redesign:</strong> Neugestaltung und Erweiterung der Website nach Figma-Vorlagen, Entwicklung wiederverwendbarer Komponenten</li>
+            <li>Neugestaltung und Erweiterung einer E-Commerce-Website nach Figma-Vorlagen, Entwicklung wiederverwendbarer Komponenten und Cloud-Migration eines Prozessmanagement-Systems (Details unter „Ausgewählte Projekte“)</li>
             <li>Zustandsverwaltung mit <strong>NgRx / Signal Store</strong>, Migration von Altcode (Legacy) auf moderne Angular-Architektur</li>
             <li>Integration von REST-Schnittstellen und reaktiven Formularen, Optimierung von Ladezeiten und <strong>Core Web Vitals</strong></li>
             <li>Direkte Abstimmung mit Design- und Analyseteam</li>
-            <li><strong>Prozessmanagement-System — Migration in die Cloud:</strong> neue Funktionen eigenständig entwickelt, Oberfläche beschleunigt, Continuous Integration mit Jenkins eingerichtet</li>
             <li>Angular-Grundlagenschulungen und interne Fragerunden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich betreut</li>
           </ul>
         </div>
@@ -670,7 +685,7 @@
         <div class="edu-item">
           <div class="date">09/2024 – 07/2027 (voraussichtlich)</div>
           <h3>B.Sc. Software Engineering</h3>
-          <div class="org">National Technical University of Ukraine, Kyiv · berufsbegleitend</div>
+          <div class="org">National Technical University of Ukraine, Kyiv</div>
         </div>
         <div class="edu-item">
           <div class="date">02/2021 – 06/2021</div>
@@ -706,7 +721,6 @@
   Oleksandra Fedorenko · <a href="mailto:oleksandra.fedorenko@yahoo.com">oleksandra.fedorenko@yahoo.com</a> · <a href="tel:+491603847759">+49 160 3847759</a> · zuletzt aktualisiert: Oktober 2026
 </footer>
 
-<button class="tarot-fab" onclick="openTarot()" aria-label="Tarot-Lesung öffnen" title="Tarot-Lesung">🔮</button>
 
 <div class="tarot-overlay" id="tarotOverlay" onclick="if(event.target===this) closeTarot()">
   <div class="tarot-modal">
@@ -744,7 +758,7 @@
       roman: "IV", title: "Der Herrscher", hue: "#d8b76b",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_04_Emperor.jpg",
       icon: `<circle cx="50" cy="38" r="22" stroke-opacity="0.9"/><path d="M50 16 L50 10 M50 66 L50 60 M28 38 L22 38 M78 38 L72 38 M34 22 L30 18 M70 54 L66 58 M66 22 L70 18 M30 58 L34 54" stroke-linecap="round"/><path d="M22 88 Q50 58 78 88" stroke-opacity="0.85" stroke-linecap="round"/><path d="M34 88 Q50 72 66 88" stroke-opacity="0.6" stroke-linecap="round"/>`,
-      text: "5 Jahre Architektur vor dem Code — Struktur, Präzision und das Auge fürs Detail stecken in jeder Komponente, die sie baut.",
+      text: "Vom Architekturdesign zum Code — strukturiertes Denken und Präzision aus der Architektur, heute angewendet auf Software-Interfaces.",
       kw: "Struktur",
       rat: "Schaffen Sie Klarheit und feste Strukturen.",
       read: ["Ein festes Fundament wurde gelegt: Ordnung und Verantwortung prägen Ihren bisherigen Weg.", "Klare Regeln und Struktur tragen Sie jetzt. Wer Ordnung schafft, behält die Führung.", "Stabilität wächst. Was Sie planvoll aufbauen, erhält dauerhaft Bestand."]
@@ -753,7 +767,7 @@
       roman: "I", title: "Der Magier", hue: "#3f9aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_01_Magician.jpg",
       icon: `<path d="M50 12 L58 38 L50 34 L42 38 Z" stroke-linejoin="round"/><line x1="50" y1="34" x2="50" y2="78" stroke-linecap="round"/><path d="M38 88 Q50 78 62 88" stroke-opacity="0.8" stroke-linecap="round"/><path d="M30 24 L36 30 M70 24 L64 30 M22 50 L30 50 M78 50 L70 50" stroke-linecap="round" stroke-opacity="0.7"/><path d="M50 56 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0" stroke-opacity="0.9"/>`,
-      text: "Legacy-Code in moderne Angular-Architektur überführt — schnellere Ladezeiten und solide Tests mit Jest, Jasmine und Karma.",
+      text: "Legacy-Code in moderne Angular-NgRx-Architektur überführt — Ladezeit um 35 % gesenkt, abgesichert mit Jest, Jasmine und Karma.",
       kw: "Willenskraft",
       rat: "Nutzen Sie Ihre Mittel und handeln Sie bewusst.",
       read: ["Sie haben Ihre Fähigkeiten entdeckt und gelernt, sie gezielt einzusetzen.", "Alle Mittel liegen bereit. Jetzt gilt es, den Willen in Handeln zu verwandeln.", "Ihr Geschick öffnet eine Tür — wer entschlossen zugreift, gestaltet das Ergebnis."]
@@ -762,7 +776,7 @@
       roman: "XIX", title: "Die Sonne", hue: "#e0af68",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_19_Sun.jpg",
       icon: `<circle cx="50" cy="48" r="16" stroke-opacity="0.9"/><g stroke-linecap="round" stroke-opacity="0.8"><line x1="50" y1="18" x2="50" y2="10"/><line x1="50" y1="78" x2="50" y2="86"/><line x1="20" y1="48" x2="12" y2="48"/><line x1="80" y1="48" x2="88" y2="48"/><line x1="28" y1="26" x2="22" y2="20"/><line x1="72" y1="26" x2="78" y2="20"/><line x1="28" y1="70" x2="22" y2="76"/><line x1="72" y1="70" x2="78" y2="76"/></g>`,
-      text: "Mentorin, Trainerin, Teamplayerin — leitete Angular-Trainings bei EPAM und arbeitet in internationalen, interdisziplinären Teams.",
+      text: "Angular-Grundlagenschulungen und Q&A-Runden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich begleitet.",
       kw: "Klarheit und Zuversicht",
       rat: "Zeigen Sie sich offen — Zuversicht trägt Sie.",
       read: ["Eine Zeit der Klarheit und Zuversicht — ein Erfolg wirkt bis heute nach.", "Offenheit und Lebensfreude tragen Sie. Die Dinge zeigen sich, wie sie sind.", "Ein gutes Zeichen: Erfolg, Wärme und Anerkennung kündigen sich an."]
@@ -771,7 +785,7 @@
       roman: "XVI", title: "Der Turm", hue: "#c0567a",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_16_Tower.jpg",
       icon: `<rect x="38" y="20" width="24" height="56" rx="2" stroke-opacity="0.85"/><line x1="38" y1="34" x2="62" y2="34" stroke-opacity="0.6"/><line x1="38" y1="48" x2="62" y2="48" stroke-opacity="0.6"/><line x1="38" y1="62" x2="62" y2="62" stroke-opacity="0.6"/><path d="M50 10 L58 24 L50 20 L42 24 Z" stroke-linejoin="round"/><path d="M28 86 L72 86" stroke-opacity="0.7" stroke-linecap="round"/>`,
-      text: "Core Web Vitals über 20+ Business Units hinweg verbessert — Performance-Transformation im großen Maßstab, kein Einzelfall.",
+      text: "Core Web Vitals über 20+ Business Units auf SAP Commerce Cloud verbessert (Hybris + Spartacus).",
       kw: "Umbruch",
       rat: "Lassen Sie Überholtes los, bevor es Sie bindet.",
       read: ["Ein Umbruch hat Altes eingerissen — schmerzhaft, aber befreiend.", "Alte Gewissheiten geraten ins Wanken. Lassen Sie los, was nicht mehr trägt.", "Ein plötzlicher Wandel räumt auf; danach lässt sich auf festem Grund neu bauen."]
@@ -780,7 +794,7 @@
       roman: "XI", title: "Die Gerechtigkeit", hue: "#6fa88b",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_11_Justice.jpg",
       icon: `<line x1="50" y1="14" x2="50" y2="80" stroke-linecap="round"/><line x1="24" y1="30" x2="76" y2="30" stroke-linecap="round"/><path d="M24 30 L16 46 L32 46 Z" stroke-linejoin="round"/><path d="M76 30 L68 46 L84 46 Z" stroke-linejoin="round"/><line x1="38" y1="86" x2="62" y2="86" stroke-linecap="round"/>`,
-      text: "Sauberer Code, konsequente Code-Reviews und Tests mit Jest, Jasmine, Karma und Playwright — Qualität ist kein Zufall.",
+      text: "Clean Code, Code-Reviews und Tests mit Jest, Jasmine, Karma und Playwright (E2E) — Testabdeckung über 80 %.",
       kw: "Gerechtigkeit",
       rat: "Entscheiden Sie sachlich und ehrlich.",
       read: ["Eine Entscheidung wurde ehrlich getroffen, ihre Folgen wirken bis heute nach.", "Wägen Sie sachlich ab. Klarheit und Fairness weisen jetzt den Weg.", "Ein gerechter Ausgleich naht: Sorgfalt und Redlichkeit werden belohnt."]
@@ -789,7 +803,7 @@
       roman: "XVII", title: "Der Stern", hue: "#7aa2d8",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_17_Star.jpg",
       icon: `<path d="M50 12 L58 36 L84 36 L63 51 L71 76 L50 61 L29 76 L37 51 L16 36 L42 36 Z" stroke-opacity="0.9"/>`,
-      text: "Lernt nie aus: absolviert seit 2024 berufsbegleitend einen B.Sc. Software Engineering — Ambition mit langem Atem.",
+      text: "Lernt nie aus: absolviert seit 2024 einen B.Sc. Software Engineering an der National Technical University of Ukraine — Ambition mit langem Atem.",
       kw: "Hoffnung",
       rat: "Bewahren Sie Vertrauen in Ihren Weg.",
       read: ["Nach einer schweren Phase kehrte Hoffnung zurück; etwas in Ihnen heilte.", "Vertrauen und Inspiration nähren Sie. Bleiben Sie Ihrem Ziel treu.", "Ein Lichtblick am Horizont: Ihre Wünsche finden einen offenen Himmel."]
@@ -807,7 +821,7 @@
       roman: "X", title: "Das Rad", hue: "#c99a4f",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_10_Wheel_of_Fortune.jpg",
       icon: `<circle cx="50" cy="50" r="30" stroke-opacity="0.9"/><circle cx="50" cy="50" r="6" stroke-opacity="0.9"/><line x1="50" y1="20" x2="50" y2="30" stroke-linecap="round"/><line x1="50" y1="70" x2="50" y2="80" stroke-linecap="round"/><line x1="20" y1="50" x2="30" y2="50" stroke-linecap="round"/><line x1="70" y1="50" x2="80" y2="50" stroke-linecap="round"/><line x1="29" y1="29" x2="36" y2="36" stroke-linecap="round"/><line x1="64" y1="64" x2="71" y2="71" stroke-linecap="round"/><line x1="71" y1="29" x2="64" y2="36" stroke-linecap="round"/><line x1="36" y1="64" x2="29" y2="71" stroke-linecap="round"/>`,
-      text: "Vom Architekturbüro zur Softwareentwicklung — ein mutiger Kurswechsel, der sich in fünf Jahren Praxis bewährt hat.",
+      text: "Vom Architekturdesign zur Softwareentwicklung — ein Kurswechsel, der sich in fünf Jahren Praxis bewährt hat.",
       kw: "Wandel",
       rat: "Bleiben Sie beweglich — der Moment wandelt sich.",
       read: ["Das Rad hat sich gedreht: Ein Wendepunkt hat Ihr Leben neu ausgerichtet.", "Die Dinge sind in Bewegung. Nutzen Sie den Moment, bevor das Rad weiterdreht.", "Das Glück wendet sich. Ein neuer Zyklus beginnt."]
