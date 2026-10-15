@@ -355,6 +355,15 @@
   .tarot-strip .hero-tarot:hover{ background:rgba(216,183,107,0.2); border-color:var(--gold); transform:translateY(-1px); box-shadow:0 6px 20px rgba(216,183,107,0.2); }
   .tarot-strip .tarot-fx::before{ border-radius:14px; }
   .hero-summary{ font-size:14.5px; line-height:1.65; color:#d9ccb8; max-width:54ch; margin:18px 0 22px; }
+  /* same banner height in DE and EN: reserve the longest summary */
+  .hero-summary{ min-height:calc(1.65em * 5); }
+  @media (min-width:710px) and (max-width:779px){ .hero-summary{ min-height:calc(1.65em * 6); } }
+  @media (min-width:656px) and (max-width:709px){ .hero-summary{ min-height:calc(1.65em * 7); } }
+  @media (min-width:641px) and (max-width:655px){ .hero-summary{ min-height:calc(1.65em * 8); } }
+  @media (max-width:490px){ .hero-summary{ min-height:calc(1.65em * 6); } }
+  @media (max-width:390px){ .hero-summary{ min-height:calc(1.65em * 7); } }
+  @media (max-width:360px){ .hero-summary{ min-height:calc(1.65em * 8); } }
+  .hero-cta .btn-primary, .hero-cta .btn-secondary, .hero-cta .hero-tarot{ white-space:nowrap; flex:0 0 auto; }
   .topbar .btn-line{ border-color:rgba(246,240,228,0.3); color:#f6f0e4; }
   .topbar .btn-line:hover{ border-color:var(--gold); color:var(--gold); }
   .topbar .btn-solid{ background:var(--gold); color:#2a1c14; }
@@ -528,7 +537,15 @@
   @media (max-width:600px){
     .tarot-modal{ padding:14px 14px 14px; }
     .tarot-cards{ gap:8px; }
-    .tcard{ height:96px; }
+    .tcard{ height:108px; }
+    .tcard-front{ display:grid; grid-template-columns:64px 1fr; grid-template-rows:auto 1fr; column-gap:10px; align-items:start; text-align:left; justify-content:stretch; padding:8px 10px; }
+    .tcard-art{ grid-column:1; grid-row:1 / 3; width:64px; height:100%; margin:0; align-self:stretch; }
+    .tcard-roman{ grid-column:2; grid-row:1; margin:0 0 2px; text-align:left; }
+    .tcard-txt{ display:block; grid-column:2; grid-row:2; min-width:0; text-align:left; }
+    .tcard-front h4{ text-align:left; }
+    .tcard-front p{ text-align:left; }
+    .tcard-medallion{ width:44px; height:44px; }
+    .tcard-medallion svg{ width:26px; height:26px; }
     .tarot-modal h2{ font-size:15px; padding:0 22px; }
     .tarot-cta-row{ flex-wrap:nowrap; gap:8px; }
     .tarot-cta-row .btn, .tarot-verdict .btn-ghost{ font-size:10.5px; padding:0 8px; height:36px; letter-spacing:0; }
@@ -541,9 +558,7 @@
     .tcard-front h4{ margin-bottom:3px; }
     .tcard-front p{ font-size:11.5px; color:#d6cab8; }
     .tarot-reshuffle{ margin-bottom:8px; }
-    .tcard-art{ display:none; }
     .tcard-front{ padding-top:8px; }
-    .tcard-front svg{ display:none; }
     .tcard-front p{ -webkit-line-clamp:3; }
     .tcard-front{ padding:6px 8px; }
     .tarot-verdict.reading p{ min-height:0; }
@@ -599,6 +614,9 @@
       0 0 130px 55px rgba(16,10,7,0.34),
       inset 0 1px 0 rgba(255,255,255,0.05);
   }
+
+  .tcard-txt{ display:contents; }
+  @media (max-width:600px){ .tcard-txt{ display:block; } }
 
   /* ---------- floating tarot button ---------- */
   .tarot-fab{
@@ -1079,8 +1097,10 @@
                 <svg viewBox="0 0 100 100" fill="none" stroke="${card.hue}" stroke-width="2.2">${card.icon}</svg>
               </div>
             </div>
+            <div class="tcard-txt">
             <h4>${card.title}</h4>
             <p>${reading ? (card.read[idx] || card.read[1]) : card.text}</p>
+            </div>
           </div>
         </div>
       </div>`;
@@ -1192,7 +1212,7 @@
   /* ---- language switch (DE/EN on one page) ---- */
   const I18N = {"att": {"html": {"en": {"lang": "en"}, "de": {"lang": "de"}}, "meta[name=\"description\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer (Angular) with 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:title\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer"}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin"}}, "meta[property=\"og:description\"]": {"en": {"content": "Angular developer with 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Angular-Entwicklerin mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:locale\"]": {"en": {"content": "en_US"}, "de": {"content": "de_DE"}}, "button.tarot-close": {"en": {"aria-label": "Close"}, "de": {"aria-label": "Schließen"}}, "input#tarotQuestionInput": {"en": {"aria-label": "Your question for the cards", "placeholder": "Learn something about yourself …"}, "de": {"aria-label": "Ihre Frage an die Karten", "placeholder": "Erfahren Sie etwas über sich …"}}, "button#tarotClear": {"en": {"aria-label": "Clear question"}, "de": {"aria-label": "Frage löschen"}}}, "de": ["Oleksandra Fedorenko — Frontend-Entwicklerin", "OLEKSANDRA FEDORENKO", "Erfahrung", "Ausbildung", "EN", "Oleksandra Fedorenko", "Frontend-Entwicklerin", "5 Jahre Berufserfahrung in der Entwicklung und Weiterentwicklung komplexer Webanwendungen im Enterprise- und E-Commerce-Umfeld. Schwerpunkt: Frontend-Entwicklung mit Angular — Umsetzung neuer Funktionen, Modernisierung bestehender Anwendungen und Performance-Optimierung.", "Kontakt aufnehmen", "Lebenslauf PDF", "✦", "✧", "✦", "·", "🔮", " Tarot-Lesung", "Auf der Suche nach einer neuen Rolle", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Expertise", "Enterprise Web Applications", "E-Commerce", "Frontend-Architektur", "Performance-Optimierung", "Cloud Migration", "Tech Stack", "Angular (2–20)", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3 / SCSS", "Angular Material", "Bootstrap", "SAP Spartacus (Hybris)", "Angular Ecosystem", "NgRx", "Signal Store", "RxJS", "Nx Monorepo", "REST APIs", "Reactive Forms", "Werkzeuge", "Git", "Jenkins", "GitLab CI", "Jira", "Postman", "Figma", "Chart.js", "Testing", "Jest", "Jasmine", "Karma", "ESLint", "Prettier", "SonarQube", "Practices", "Agile Entwicklung (Scrum)", "Code Reviews", "Test Driven Development (TDD)", "Clean Code Principles", "SOLID Principles", "BEM Methodology", "Sprachen", "Englisch", "fließend", "Deutsch", "gute Kenntnisse", "Ukrainisch", "Muttersprache", "Russisch", "Muttersprache", "Zertifikate", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Berufserfahrung", "06/2026 – heute", "Projektarbeit und fachliche Weiterentwicklung", "Deutschland", "07/2023 – 06/2026", "Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt, Deutschland · ", "epam.com", "E-Commerce-Plattform: Neugestaltung der Website", "Neugestaltung und Erweiterung der Website nach Figma-Vorlagen", "Entwicklung wiederverwendbarer Komponenten", "Zustandsverwaltung mit ", "NgRx / Signal Store", ", Migration von Altcode", "Integration von REST-Schnittstellen und reaktiven Formularen", "Optimierung von Ladezeiten und ", "Core Web Vitals", "Direkte Abstimmung mit Design- und Analyseteam", "Prozessmanagement-System: Migration in die Cloud", "Entwicklung neuer Funktionen, Beschleunigung der Oberfläche", "Einrichtung der kontinuierlichen Integration mit ", "Jenkins", "Absicherung neuer Funktionen durch Modul- und Snapshot-Tests", "Projektübergreifend", "Leitung von Angular-Grundlagenschulungen und internen Fragerunden", "Analyse und Behebung von Fehlern", "10/2021 – 07/2023", "Junior Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt, Deutschland · ", "epam.com", "Projekt „USIS Transformation“", "Erstellung von Modul- und Snapshot-Tests", "Umsetzung kleinerer Funktionen der Benutzeroberfläche", "Mitarbeit an den Entwicklungsrichtlinien des Projekts", "TR Legal Tracker und Lösung zur Betrugserkennung", "Behebung von Fehlern in bestehenden Komponenten", "Erweiterung von Komponenten um kleinere Funktionen", "06/2021 – 10/2021", "Praktikantin — EPAM Lab", "EPAM Systems Inc., Frankfurt, Deutschland · Ausbildungsprogramm", "Entwicklung eines Lernprojekts: Filmplattform (Frontend und Backend)", "Einrichtung der Datenbank und Bereitstellung der Anwendung", "Übernahme in ein Produktivprojekt im Oktober 2021", "Bildungsweg IT", "09/2024 – 07/2027 (voraussichtlich)", "B.Sc. Softwaretechnik", "Nationale Technische Universität der Ukraine, Kyjiw", "02/2021 – 06/2021", "Weiterbildung Frontend-Entwicklung", "EPAM Systems, externer Weiterbildungskurs", "Weitere Berufserfahrung", "10/2018 – 02/2021", "Elternzeit", "04/2013 – 05/2018", "Architektin / Leitende Architektin", "Architekturentwurf und Projektkoordination", "Technische Dokumentation erstellt und gepflegt", "Visualisierungen mit ", "AutoCAD, ArchiCAD, Revit, SketchUp", "Studium", "09/2011 – 03/2013", "M.Sc. Stadtplanung", "Nationale Universität Lwiw Polytechnik", "09/2006 – 07/2011", "B.Sc. Architektur", "Kyjiw Nationale Universität für Bauwesen und Architektur", "🔮 Noch unentschlossen?", "Lassen Sie die Karten entscheiden — eine kurze, augenzwinkernde Tarot-Lesung mit sehr handfesten Argumenten.", "Karten ziehen", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · zuletzt aktualisiert: Oktober 2026\n", "×", "Warum Sie Oleksandra einstellen sollten", "Drei Karten aus dem Deck, drei sehr reale Gründe.", "↻ Neu mischen", "Das Urteil", "Was die Karten zeigen", "Jetzt Kontakt aufnehmen →", "Lebenslauf herunterladen", "×", "Frage stellen", "✉ Kontakt aufnehmen", "·", "↓ Lebenslauf (PDF)"], "en": ["Oleksandra Fedorenko — Frontend Developer", "OLEKSANDRA FEDORENKO", "Experience", "Education", "DE", "Oleksandra Fedorenko", "Frontend Developer", "5 years of experience developing and evolving complex web applications in the enterprise and e-commerce space. Focus: frontend development with Angular — implementing new features, modernizing existing applications and performance optimization.", "Get in touch", "Resume PDF (DE)", "✦", "✧", "✦", "·", "🔮", " Tarot Reading", "Looking for a new role", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Expertise", "Enterprise Web Applications", "E-Commerce", "Frontend architecture", "Performance optimization", "Cloud migration", "Tech Stack", "Angular (2–20)", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3 / SCSS", "Angular Material", "Bootstrap", "SAP Spartacus (Hybris)", "Angular Ecosystem", "NgRx", "Signal Store", "RxJS", "Nx Monorepo", "REST APIs", "Reactive Forms", "Tools", "Git", "Jenkins", "GitLab CI", "Jira", "Postman", "Figma", "Chart.js", "Testing", "Jest", "Jasmine", "Karma", "ESLint", "Prettier", "SonarQube", "Practices", "Agile development (Scrum)", "Code reviews", "Test-driven development (TDD)", "Clean Code principles", "SOLID principles", "BEM methodology", "Languages", "English", "fluent", "German", "good command", "Ukrainian", "native", "Russian", "native", "Certificates", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Professional experience", "06/2026 – present", "Project work and professional development", "Germany", "07/2023 – 06/2026", "Frontend Developer", "EPAM Systems Inc., Frankfurt, Germany · ", "epam.com", "E-commerce platform: website redesign", "Redesigned and extended the website based on Figma designs", "Developed reusable components", "State management with ", "NgRx / Signal Store", ", migration of legacy code", "Integration of REST APIs and reactive forms", "Optimization of load times and ", "Core Web Vitals", "Direct collaboration with the design and analysis team", "Process management system: migration to the cloud", "Developed new features, sped up the user interface", "Set up continuous integration with ", "Jenkins", "Secured new features with unit and snapshot tests", "Across projects", "Led Angular fundamentals training and internal Q&A sessions", "Analyzed and fixed bugs", "10/2021 – 07/2023", "Junior Frontend Developer", "EPAM Systems Inc., Frankfurt, Germany · ", "epam.com", "USIS Transformation project", "Wrote unit and snapshot tests", "Implemented smaller user interface features", "Contributed to the project's development guidelines", "TR Legal Tracker and fraud detection solution", "Fixed bugs in existing components", "Extended components with smaller features", "06/2021 – 10/2021", "Intern — EPAM Lab", "EPAM Systems Inc., Frankfurt, Germany · Training program", "Built a learning project: film platform (frontend and backend)", "Set up the database and deployed the application", "Moved to a production project in October 2021", "IT education", "09/2024 – 07/2027 (expected)", "B.Sc. Software Engineering", "National Technical University of Ukraine, Kyiv", "02/2021 – 06/2021", "Frontend development training", "EPAM Systems, external training course", "Other professional experience", "10/2018 – 02/2021", "Parental leave", "04/2013 – 05/2018", "Architect / Lead Architect", "Architectural design and project coordination", "Created and maintained technical documentation", "Visualizations with ", "AutoCAD, ArchiCAD, Revit, SketchUp", "Studies", "09/2011 – 03/2013", "M.Sc. Urban Planning", "Lviv Polytechnic National University", "09/2006 – 07/2011", "B.Sc. Architecture", "Kyiv National University of Construction and Architecture", "🔮 Still undecided?", "Let the cards decide — a short, tongue-in-cheek tarot reading with very solid arguments.", "Draw cards", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · last updated: October 2026\n", "×", "Why you should hire Oleksandra", "Three cards from the deck, three very real reasons.", "↻ Shuffle again", "The verdict", "What the cards show", "Get in touch now →", "Download resume", "×", "Ask", "✉ Get in touch", "·", "↓ Resume (PDF)"]};
   const ELS = [document.documentElement, ...document.documentElement.querySelectorAll('*')];
-  function walkText(){ const out=[]; const w=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE')return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}}); while(w.nextNode())out.push(w.currentNode); return out; }
+  function walkText(){ const out=[]; const w=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE')return NodeFilter.FILTER_REJECT; if(n.parentNode.closest && n.parentNode.closest('#tarotCards, #tarotQuestionEcho, #tarotVerdictText'))return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}}); while(w.nextNode())out.push(w.currentNode); return out; }
   function setLang(l, save){
     if(l===LANG && !save) return;
     LANG=l;
@@ -1203,11 +1223,28 @@
     try{ if(save) localStorage.setItem('lang',l); }catch(e){}
     if(typeof dealCards==='function' && document.getElementById('tarotOverlay').classList.contains('open')) dealCards();
   }
+  function swapText(l){
+    const tn=walkText();
+    if(tn.length===I18N.de.length){ tn.forEach((n,i)=>{ const src=I18N[l][i]; if(n.nodeValue!==src) n.nodeValue=src; }); }
+  }
+  /* keep the banner (and the photo) the same height in DE and EN */
+  function lockBanner(){
+    const band=document.querySelector('.header-band'); if(!band) return;
+    band.style.minHeight='';
+    const cur=LANG; let max=0;
+    ['de','en'].forEach(l=>{ swapText(l); max=Math.max(max, band.getBoundingClientRect().height); });
+    swapText(cur);
+    band.style.minHeight=Math.ceil(max)+'px';
+  }
+  let _lbT; window.addEventListener('resize',()=>{ clearTimeout(_lbT); _lbT=setTimeout(lockBanner,120); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(lockBanner);
+  window.addEventListener('load',lockBanner);
   function toggleLang(){ setLang(LANG==='de'?'en':'de', true); }
   (function(){
     let l=null; try{ l=localStorage.getItem('lang'); }catch(e){}
     if(!l){ const q=new URLSearchParams(location.search).get('lang'); l=q||((navigator.language||'de').toLowerCase().startsWith('de')?'de':'en'); }
     if(l==='en') setLang('en');
+    lockBanner();
   })();
 </script>
 
