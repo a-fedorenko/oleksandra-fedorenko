@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
+<meta name="description" content="Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Oleksandra Fedorenko — Frontend-Entwicklerin">
-<meta property="og:description" content="Angular-Entwicklerin mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
+<meta property="og:description" content="Angular-Entwicklerin mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf.">
 <meta property="og:locale" content="de_DE">
 <title>Oleksandra Fedorenko — Frontend-Entwicklerin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -245,6 +245,8 @@
   .stackline{ font-size:13.5px; color:var(--faint); line-height:1.8; }
   .stackline b{ color:var(--muted); }
 
+  .subh{ font-size:15.5px; font-weight:700; color:var(--ink); margin:20px 0 10px; }
+  .job .org + .subh{ margin-top:4px; }
   .proj-card{
     background:var(--bg-elevated); border:1px solid var(--border-soft); border-left:3px solid var(--accent);
     padding:26px 28px; border-radius:0 10px 10px 0;
@@ -406,7 +408,7 @@
   }
   @media (max-width:600px){ .tarot-cards{ grid-template-columns:1fr; } }
   .tcard{
-    perspective:1200px; height:clamp(200px, 36vh, 280px); cursor:pointer;
+    perspective:1200px; height:clamp(200px, 36vh, 280px); cursor:default;
   }
   .tcard-inner{
     position:relative; width:100%; height:100%; transition:transform .7s cubic-bezier(.4,.2,.2,1);
@@ -458,6 +460,14 @@
     cursor:pointer; transition:background .15s; white-space:nowrap;
   }
   .tarot-reshuffle:hover{ background:rgba(216,183,107,0.1); }
+  .tarot-reshuffle{ margin:0 auto 14px; }
+  .tarot-ask-row{ margin:16px auto 0; }
+  .tarot-ask-btn{
+    font-family:'IBM Plex Mono'; font-size:11px; font-weight:600; letter-spacing:.06em; color:#2a1d12;
+    background:var(--gold); border:1px solid var(--gold); border-radius:20px; padding:6px 16px; cursor:pointer; white-space:nowrap;
+    transition:filter .15s;
+  }
+  .tarot-ask-btn:hover{ filter:brightness(1.08); }
   .tarot-input-wrap{ position:relative; flex:1; min-width:0; display:flex; }
   .tarot-input-wrap .tarot-question-input{ width:100%; padding-right:32px; }
   .tarot-clear{ display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); width:20px; height:20px; border:none; border-radius:50%; background:rgba(255,255,255,0.1); color:var(--muted); font-size:14px; line-height:1; cursor:pointer; padding:0; }
@@ -481,7 +491,6 @@
     text-align:center; padding-top:14px; border-top:1px solid var(--border-soft);
     opacity:0; visibility:hidden; transition:opacity .5s ease;
   }
-  .tarot-verdict.reading #tarotCta{ display:none; }
   .tarot-verdict.reading p{ min-height:calc(5em + 53px); margin-bottom:0; }
   .tarot-verdict.show{ opacity:1; visibility:visible; }
   .tarot-verdict .vlabel{
@@ -491,6 +500,105 @@
   .tarot-verdict h3{ font-size:16px; color:#fff; margin-bottom:7px; }
   .tarot-verdict p{ font-size:13px; color:var(--muted); max-width:56ch; margin:0 auto 14px; min-height:5em; }
   .tarot-verdict .btn-solid{ display:inline-flex; }
+
+  /* compact modal */
+  .tarot-overlay{ padding:12px; }
+  .tarot-modal{ padding:16px 22px 16px; max-height:96vh; }
+  .tarot-modal h2{ font-size:16.5px; margin-bottom:2px; }
+  .tarot-modal .sub{ margin-bottom:8px; }
+  .tarot-reshuffle{ margin:0 auto 10px; }
+  .tarot-cards{ gap:10px; margin-bottom:10px; }
+  .tcard{ height:clamp(180px, 31vh, 250px); }
+  .tcard-art{ height:clamp(64px, 12vh, 104px); margin:0 0 4px; }
+  .tarot-verdict{ padding-top:10px; }
+  .tarot-verdict p{ margin-bottom:10px; min-height:3.6em; }
+  .tarot-verdict.reading p{ min-height:calc(5em + 4px); }
+  .tarot-question-echo{ margin-bottom:6px; }
+  .tarot-verdict .vlabel{ margin-bottom:4px; }
+  .tarot-verdict h3{ margin-bottom:5px; }
+  .tarot-ask-row{
+    max-width:none; justify-content:center; margin:12px 0 0; padding-top:14px; position:relative;
+    background:linear-gradient(90deg, transparent, rgba(216,183,107,0.5) 38%, transparent 49%, transparent 51%, rgba(216,183,107,0.5) 62%, transparent) top/100% 1px no-repeat;
+  }
+  .tarot-ask-row .tarot-input-wrap{ flex:0 1 380px; }
+  .tarot-ask-row::before{
+    content:"✦"; position:absolute; top:-8px; left:50%; transform:translateX(-50%); font-size:10px; line-height:16px; padding:0 8px;
+    color:rgba(216,183,107,0.75); background:transparent;
+  }
+  @media (max-width:600px){
+    .tarot-modal{ padding:14px 14px 14px; }
+    .tarot-cards{ gap:8px; }
+    .tcard{ height:96px; }
+    .tarot-modal h2{ font-size:15px; padding:0 22px; }
+    .tarot-cta-row{ flex-wrap:nowrap; gap:8px; }
+    .tarot-cta-row .btn, .tarot-verdict .btn-ghost{ font-size:10.5px; padding:0 8px; height:36px; letter-spacing:0; }
+    .tcard-front p{ font-size:11.5px; color:#d6cab8; }
+    .tarot-modal .sub{ display:none; }
+    .tarot-modal h2{ margin-bottom:8px; }
+    .tarot-verdict p{ font-size:12px; line-height:1.45; margin-bottom:8px; }
+    .tarot-verdict h3{ font-size:15px; }
+    .tarot-question-echo{ font-size:12px; margin-bottom:4px; }
+    .tcard-front h4{ margin-bottom:3px; }
+    .tcard-front p{ font-size:11.5px; color:#d6cab8; }
+    .tarot-reshuffle{ margin-bottom:8px; }
+    .tcard-art{ display:none; }
+    .tcard-front{ padding-top:8px; }
+    .tcard-front svg{ display:none; }
+    .tcard-front p{ -webkit-line-clamp:3; }
+    .tcard-front{ padding:6px 8px; }
+    .tarot-verdict.reading p{ min-height:0; }
+    .tarot-verdict p{ min-height:0; }
+  }
+
+  .tarot-cta-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .tarot-verdict .btn-ghost{
+    display:inline-flex; align-items:center; font-family:'IBM Plex Mono'; font-size:12px; font-weight:600; letter-spacing:.04em; text-decoration:none;
+    color:var(--gold); border:1px solid rgba(216,183,107,0.55); border-radius:8px; padding:0 16px; height:40px; transition:background .15s;
+  }
+  .tarot-verdict .btn-ghost:hover{ background:rgba(216,183,107,0.12); }
+  .tarot-modal{ max-width:820px; }
+  @media (min-width:601px){
+    .tcard{ --art:clamp(96px, calc(100vh - 572px), 340px); height:calc(var(--art) + 134px); }
+    .tcard-art{ height:var(--art); flex:none; margin:0 0 5px; }
+    .tcard-front{ padding:8px 10px 8px; }
+    .tcard-roman{ font-size:10.5px; margin-bottom:4px; }
+    .tcard-front h4{ font-size:11.5px; margin-bottom:3px; letter-spacing:.09em; }
+    .tcard-front p{ font-size:12px; line-height:1.35; margin:0; -webkit-line-clamp:4; color:#d6cab8; }
+  }
+  .tarot-verdict{ padding-top:14px; padding-bottom:6px; }
+  .tarot-verdict.reading p{ min-height:0; margin-bottom:10px; }
+  .tarot-verdict p{ font-size:12px; line-height:1.45; margin-bottom:8px; min-height:0; max-width:72ch; }
+  .tarot-verdict h3{ font-size:14.5px; margin-bottom:4px; }
+  .tarot-verdict .vlabel{ font-size:10px; margin-bottom:3px; }
+  .tarot-question-echo{ font-size:12px; margin-bottom:3px; }
+  .tarot-cards{ margin-bottom:10px; }
+  .tarot-ask-row{ margin-top:12px; padding-top:12px; }
+
+
+  @media (prefers-reduced-motion:reduce){ .tcard-inner, .tarot-verdict{ transition:none !important; } }
+
+  .tarot-foot{ display:flex; justify-content:center; align-items:center; gap:10px; margin-top:10px; font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:.04em; }
+  .tarot-foot a{ color:var(--muted); text-decoration:none; padding:2px 4px; border-radius:4px; transition:color .15s; }
+  .tarot-foot a:hover, .tarot-foot a:focus-visible{ color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+  .tarot-foot span{ color:var(--faint); }
+
+  .tarot-verdict.reading .tarot-cta-row{ display:none; }
+  .tarot-modal:not(.qmode) .tarot-foot{ display:none; }
+
+  /* smoky glass modal */
+  .tarot-overlay{ background:radial-gradient(ellipse at center, rgba(8,6,5,0.30), rgba(8,6,5,0.55)); }
+  .tarot-modal{
+    background:
+      radial-gradient(520px 260px at 15% -10%, rgba(63,154,160,0.14), transparent 60%),
+      radial-gradient(420px 240px at 100% 110%, rgba(216,183,107,0.09), transparent 60%),
+      rgba(28,20,15,0.62);
+    backdrop-filter:blur(28px) saturate(1.2); -webkit-backdrop-filter:blur(28px) saturate(1.2);
+    border:1px solid rgba(216,183,107,0.10);
+    box-shadow:
+      0 0 50px 14px rgba(16,10,7,0.50),
+      0 0 130px 55px rgba(16,10,7,0.34),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
 
   /* ---------- floating tarot button ---------- */
   .tarot-fab{
@@ -520,7 +628,6 @@
   <div class="name">OLEKSANDRA FEDORENKO</div>
   <nav>
     <a class="navlink" href="#erfahrung">Erfahrung</a>
-    <a class="navlink" href="#projekt">Projekt</a>
     <a class="navlink" href="#ausbildung">Ausbildung</a>
     <button type="button" class="langsw" onclick="toggleLang()" aria-label="Switch language / Sprache wechseln">EN</button>
   </nav>
@@ -532,12 +639,12 @@
     <div class="hero-text">
     <h1>Oleksandra Fedorenko</h1>
     <div class="role">Frontend-Entwicklerin</div>
-    <p class="hero-summary">Über 5 Jahre Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.</p>
+    <p class="hero-summary">5 Jahre Berufserfahrung in der Entwicklung und Weiterentwicklung komplexer Webanwendungen im Enterprise- und E-Commerce-Umfeld. Schwerpunkt: Frontend-Entwicklung mit Angular — Umsetzung neuer Funktionen, Modernisierung bestehender Anwendungen und Performance-Optimierung.</p>
     <div class="hero-cta"><a class="btn-primary" href="mailto:oleksandra.fedorenko@yahoo.com">Kontakt aufnehmen</a><a class="btn-secondary" href="Oleksandra_Fedorenko_CV.pdf" target="_blank" rel="noopener">Lebenslauf PDF</a><div class="tarot-fx"><i class="st s1">✦</i><i class="st s2">✧</i><i class="st s3">✦</i><i class="st s4">·</i><button class="btn-tarot-nav hero-tarot" onclick="openTarot()"><span class="orb">🔮</span> Tarot-Lesung</button></div></div>
     </div>
   </div>
   <div class="contact-strip">
-    <div class="avail"><span class="p"></span>Offen für neue Herausforderungen</div>
+    <div class="avail"><span class="p"></span>Auf der Suche nach einer neuen Rolle</div>
     <a class="c-item" href="tel:+491603847759"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>+49 160 3847759</a>
     <a class="c-item" href="mailto:oleksandra.fedorenko@yahoo.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>oleksandra.fedorenko@yahoo.com</a>
     <div class="c-item"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>61381 Friedrichsdorf-Seulberg</div>
@@ -549,40 +656,44 @@
 <div class="layout">
   <aside class="sidebar">
     <div class="side-block">
-      <div class="side-h">Programmiersprachen</div>
+      <div class="side-h">Expertise</div>
       <ul class="sq-list">
-        <li>TypeScript</li><li>JavaScript</li><li>HTML5</li><li>CSS3</li><li>SASS / SCSS</li>
+        <li>Enterprise Web Applications</li><li>E-Commerce</li><li>Frontend-Architektur</li><li>Performance-Optimierung</li><li>Cloud Migration</li>
       </ul>
     </div>
 
     <div class="side-block">
-      <div class="side-h">Frameworks &amp; Bibliotheken</div>
+      <div class="side-h">Tech Stack</div>
       <ul class="sq-list">
-        <li>Angular (v2–20)</li><li>RxJS</li><li>NgRx / Redux / Signal Store</li>
-        <li>SAP Spartacus / Hybris</li><li>Nx Monorepo</li><li>Angular Material</li>
-        <li>Chart.js / ag-Grid</li><li>Bootstrap</li>
+        <li>Angular (2–20)</li><li>TypeScript</li><li>JavaScript (ES6+)</li><li>HTML5</li><li>CSS3 / SCSS</li><li>Angular Material</li><li>Bootstrap</li><li>SAP Spartacus (Hybris)</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Angular Ecosystem</div>
+      <ul class="sq-list">
+        <li>NgRx</li><li>Signal Store</li><li>RxJS</li><li>Nx Monorepo</li><li>REST APIs</li><li>Reactive Forms</li>
+      </ul>
+    </div>
+
+    <div class="side-block">
+      <div class="side-h">Werkzeuge</div>
+      <ul class="sq-list">
+        <li>Git</li><li>Jenkins</li><li>GitLab CI</li><li>Jira</li><li>Postman</li><li>Figma</li><li>Chart.js</li>
       </ul>
     </div>
 
     <div class="side-block">
       <div class="side-h">Testing</div>
       <ul class="sq-list">
-        <li>Jest / Jasmine / Karma</li><li>Playwright</li>
+        <li>Jest</li><li>Jasmine</li><li>Karma</li><li>ESLint</li><li>Prettier</li><li>SonarQube</li>
       </ul>
     </div>
 
     <div class="side-block">
-      <div class="side-h">Werkzeuge &amp; CI/CD</div>
+      <div class="side-h">Practices</div>
       <ul class="sq-list">
-        <li>Git</li><li>Jenkins / GitLab CI</li><li>ESLint / Prettier / SonarQube</li>
-        <li>Postman</li><li>Jira</li><li>Figma</li>
-      </ul>
-    </div>
-
-    <div class="side-block">
-      <div class="side-h">Methoden</div>
-      <ul class="sq-list">
-        <li>Agile / Scrum, Code-Reviews</li><li>TDD</li><li>Clean Code, SOLID</li><li>BEM</li>
+        <li>Agile Entwicklung (Scrum)</li><li>Code Reviews</li><li>Test Driven Development (TDD)</li><li>Clean Code Principles</li><li>SOLID Principles</li><li>BEM Methodology</li>
       </ul>
     </div>
 
@@ -608,94 +719,99 @@
         <div class="sec-h">Berufserfahrung</div>
 
         <div class="job">
+          <div class="date">06/2026 – heute</div>
+          <h3>Projektarbeit und fachliche Weiterentwicklung</h3>
+          <div class="org">Deutschland</div>
+        </div>
+
+        <div class="job">
           <div class="date">07/2023 – 06/2026</div>
           <h3>Frontend-Entwicklerin</h3>
-          <div class="org">EPAM Systems Inc., Frankfurt · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <div class="org">EPAM Systems Inc., Frankfurt, Deutschland · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <div class="subh">E-Commerce-Plattform: Neugestaltung der Website</div>
           <ul class="bullets">
-            <li>Neugestaltung und Erweiterung einer E-Commerce-Website nach Figma-Vorlagen, Entwicklung wiederverwendbarer Komponenten und Cloud-Migration eines Prozessmanagement-Systems (Details unter „Ausgewählte Projekte“)</li>
-            <li>Zustandsverwaltung mit <strong>NgRx / Signal Store</strong>, Migration von Altcode (Legacy) auf moderne Angular-Architektur</li>
-            <li>Integration von REST-Schnittstellen und reaktiven Formularen, Optimierung von Ladezeiten und <strong>Core Web Vitals</strong></li>
+            <li>Neugestaltung und Erweiterung der Website nach Figma-Vorlagen</li>
+            <li>Entwicklung wiederverwendbarer Komponenten</li>
+            <li>Zustandsverwaltung mit <strong>NgRx / Signal Store</strong>, Migration von Altcode</li>
+            <li>Integration von REST-Schnittstellen und reaktiven Formularen</li>
+            <li>Optimierung von Ladezeiten und <strong>Core Web Vitals</strong></li>
             <li>Direkte Abstimmung mit Design- und Analyseteam</li>
-            <li>Angular-Grundlagenschulungen und interne Fragerunden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich betreut</li>
+          </ul>
+          <div class="subh">Prozessmanagement-System: Migration in die Cloud</div>
+          <ul class="bullets">
+            <li>Entwicklung neuer Funktionen, Beschleunigung der Oberfläche</li>
+            <li>Einrichtung der kontinuierlichen Integration mit <strong>Jenkins</strong></li>
+            <li>Absicherung neuer Funktionen durch Modul- und Snapshot-Tests</li>
+          </ul>
+          <div class="subh">Projektübergreifend</div>
+          <ul class="bullets">
+            <li>Leitung von Angular-Grundlagenschulungen und internen Fragerunden</li>
+            <li>Analyse und Behebung von Fehlern</li>
           </ul>
         </div>
 
         <div class="job">
           <div class="date">10/2021 – 07/2023</div>
           <h3>Junior Frontend-Entwicklerin</h3>
-          <div class="org">EPAM Systems Inc., Frankfurt · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <div class="org">EPAM Systems Inc., Frankfurt, Deutschland · <a href="https://www.epam.com" target="_blank" rel="noopener">epam.com</a></div>
+          <div class="subh">Projekt „USIS Transformation“</div>
           <ul class="bullets">
-            <li><strong>USIS Transformation Project:</strong> Fehler analysiert und behoben, Modul- und Snapshot-Tests geschrieben, kleinere UI-Funktionen umgesetzt, Mitwirkung an den Entwicklungsrichtlinien des Projekts</li>
-            <li><strong>TR Legal Tracker &amp; Lösung zur Betrugserkennung:</strong> Fehler in bestehenden Komponenten behoben, Modul- und Snapshot-Tests geschrieben, Komponenten um kleinere Funktionen erweitert</li>
+            <li>Erstellung von Modul- und Snapshot-Tests</li>
+            <li>Umsetzung kleinerer Funktionen der Benutzeroberfläche</li>
+            <li>Mitarbeit an den Entwicklungsrichtlinien des Projekts</li>
+          </ul>
+          <div class="subh">TR Legal Tracker und Lösung zur Betrugserkennung</div>
+          <ul class="bullets">
+            <li>Behebung von Fehlern in bestehenden Komponenten</li>
+            <li>Erweiterung von Komponenten um kleinere Funktionen</li>
           </ul>
         </div>
 
         <div class="job">
           <div class="date">06/2021 – 10/2021</div>
           <h3>Praktikantin — EPAM Lab</h3>
-          <div class="org">EPAM Systems Inc., Frankfurt · Ausbildungsprogramm</div>
+          <div class="org">EPAM Systems Inc., Frankfurt, Deutschland · Ausbildungsprogramm</div>
           <ul class="bullets">
-            <li>Lernprojekt: Filmplattform (Frontend und Backend) entwickelt, Datenbank eingerichtet und Anwendung bereitgestellt</li>
-            <li>Nach erfolgreichem Abschluss im Oktober 2021 Übernahme in ein Produktivprojekt</li>
-          </ul>
-        </div>
-
-        <div class="job">
-          <div class="date">10/2018 – 02/2021</div>
-          <h3>Elternzeit</h3>
-        </div>
-
-        <div class="job">
-          <div class="date">2013 – 05/2018</div>
-          <h3>Architektin / Leitende Architektin</h3>
-          <div class="org">Frühere Laufbahn in Architektur &amp; Bauwesen</div>
-          <ul class="bullets">
-            <li>Architekturentwurf und Projektkoordination, Verantwortung für technische Dokumentation und Visualisierungsprozesse</li>
-            <li>Erfahrung mit <strong>AutoCAD, ArchiCAD, Revit und SketchUp</strong> — Grundlage für strukturiertes Denken, Präzision und das heute auf Software-Interfaces angewendete Gespür für UI-Design</li>
-          </ul>
-          <div class="stackline"><b>Tools:</b> AutoCAD · ArchiCAD · Revit · SketchUp</div>
-        </div>
-      </section>
-
-      <section class="block reveal" id="projekt">
-        <div class="sec-h">Ausgewählte Projekte</div>
-        <div class="proj-card">
-          <h3>E-Commerce-Plattform: Website Redesign</h3>
-          <div class="org">EPAM Systems Inc., Kundenprojekt</div>
-          <ul class="bullets">
-            <li>Website-Relaunch mit <strong>neuem Design und neuer Funktionalität</strong> als Kernaufgabe</li>
-            <li>Umgesetzt mit <strong>Angular 16 und 20</strong> sowie NgRx / Signal Store innerhalb eines Monorepos</li>
-            <li>Integration von REST-APIs, Umsetzung von <strong>Figma</strong>-Designs</li>
-            <li>Arbeit mit reaktiven Formularen (Reactive Forms)</li>
-            <li>Fehlerbehebung und Tests neuer Funktionen mit Jasmine und Karma</li>
-            <li>Team aus Backend-Entwickler:innen, Frontend-Entwickler:innen und QA/Testern</li>
-            <li>Enge Zusammenarbeit mit einem separaten <strong>Kunden-Design-Team</strong> durch laufenden Austausch sowie mit einem BA-Team durch Meetings, Grooming und Planning — das Gesamtteam war <strong>international</strong></li>
-          </ul>
-        </div>
-        <div class="proj-card" style="margin-top:22px;">
-          <h3>Prozessmanagement-System: Migration in die Cloud</h3>
-          <div class="org">EPAM Systems Inc., Kundenprojekt</div>
-          <ul class="bullets">
-            <li>Migration eines IBM-BPM-Systems auf eine moderne, cloudbasierte Lösung (Google Cloud)</li>
-            <li>Neue Funktionen eigenständig entwickelt und die Oberfläche spürbar beschleunigt</li>
-            <li>Continuous Integration mit <strong>Jenkins</strong> eingerichtet</li>
-            <li>Neue Funktionen durch Modul- und Snapshot-Tests abgesichert</li>
+            <li>Entwicklung eines Lernprojekts: Filmplattform (Frontend und Backend)</li>
+            <li>Einrichtung der Datenbank und Bereitstellung der Anwendung</li>
+            <li>Übernahme in ein Produktivprojekt im Oktober 2021</li>
           </ul>
         </div>
       </section>
 
       <section class="block reveal" id="ausbildung">
-        <div class="sec-h">Ausbildung</div>
+        <div class="sec-h">Bildungsweg IT</div>
         <div class="edu-item">
           <div class="date">09/2024 – 07/2027 (voraussichtlich)</div>
-          <h3>B.Sc. Software Engineering</h3>
-          <div class="org">National Technical University of Ukraine, Kyiv</div>
+          <h3>B.Sc. Softwaretechnik</h3>
+          <div class="org">Nationale Technische Universität der Ukraine, Kyjiw</div>
         </div>
         <div class="edu-item">
           <div class="date">02/2021 – 06/2021</div>
           <h3>Weiterbildung Frontend-Entwicklung</h3>
           <div class="org">EPAM Systems, externer Weiterbildungskurs</div>
         </div>
+      </section>
+
+      <section class="block reveal" id="weitere">
+        <div class="sec-h">Weitere Berufserfahrung</div>
+        <div class="job">
+          <div class="date">10/2018 – 02/2021</div>
+          <h3>Elternzeit</h3>
+        </div>
+        <div class="job">
+          <div class="date">04/2013 – 05/2018</div>
+          <h3>Architektin / Leitende Architektin</h3>
+          <ul class="bullets">
+            <li>Architekturentwurf und Projektkoordination</li>
+            <li>Technische Dokumentation erstellt und gepflegt</li>
+            <li>Visualisierungen mit <strong>AutoCAD, ArchiCAD, Revit, SketchUp</strong></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block reveal" id="studium">
+        <div class="sec-h">Studium</div>
         <div class="edu-item">
           <div class="date">09/2011 – 03/2013</div>
           <h3>M.Sc. Stadtplanung</h3>
@@ -727,25 +843,33 @@
 
 
 <div class="tarot-overlay" id="tarotOverlay" onclick="if(event.target===this) closeTarot()">
-  <div class="tarot-modal">
+  <div class="tarot-modal" role="dialog" aria-modal="true" aria-labelledby="tarotTitle">
     <button class="tarot-close" onclick="closeTarot()" aria-label="Schließen">×</button>
     <h2 id="tarotTitle">Warum Sie Oleksandra einstellen sollten</h2>
     <div class="sub" id="tarotSub">Drei Karten aus dem Deck, drei sehr reale Gründe.</div>
 
-    <div class="tarot-question-row">
-      <span class="tarot-input-wrap"><input oninput="toggleClear()" type="text" id="tarotQuestionInput" class="tarot-question-input" placeholder="Stellen Sie den Karten eine Frage …" maxlength="120" onkeydown="if(event.key==='Enter'){ event.preventDefault(); dealCards(); }"><button type="button" class="tarot-clear" id="tarotClear" onclick="clearQuestion()" aria-label="Frage löschen">×</button></span>
-      <button class="tarot-reshuffle" onclick="dealCards()">↻ Karten befragen</button>
-    </div>
+    <button class="tarot-reshuffle" onclick="dealCards(false)">↻ Neu mischen</button>
 
 
     <div class="tarot-cards" id="tarotCards"></div>
 
-    <div class="tarot-verdict" id="tarotVerdict">
+    <div class="tarot-verdict" id="tarotVerdict" aria-live="polite">
       <div class="tarot-question-echo" id="tarotQuestionEcho"></div>
       <div class="vlabel" id="tarotVerdictLabel">Das Urteil</div>
       <h3 id="tarotVerdictTitle">Was die Karten zeigen</h3>
       <p id="tarotVerdictText"></p>
-      <a class="btn btn-solid" id="tarotCta" href="mailto:oleksandra.fedorenko@yahoo.com">Jetzt Kontakt aufnehmen →</a>
+      <div class="tarot-cta-row">
+        <a class="btn btn-solid" id="tarotCta" href="mailto:oleksandra.fedorenko@yahoo.com">Jetzt Kontakt aufnehmen →</a>
+        <a class="btn btn-ghost" href="Oleksandra_Fedorenko_CV.pdf" download>Lebenslauf herunterladen</a>
+      </div>
+    </div>
+
+    <div class="tarot-question-row tarot-ask-row">
+      <span class="tarot-input-wrap"><input oninput="toggleClear()" type="text" id="tarotQuestionInput" aria-label="Ihre Frage an die Karten" class="tarot-question-input" placeholder="Erfahren Sie etwas über sich …" maxlength="120" onkeydown="if(event.key==='Enter'){ event.preventDefault(); dealCards(true); }"><button type="button" class="tarot-clear" id="tarotClear" onclick="clearQuestion()" aria-label="Frage löschen">×</button></span>
+      <button class="tarot-ask-btn" onclick="dealCards(true)">Frage stellen</button>
+    </div>
+    <div class="tarot-foot">
+      <a href="mailto:oleksandra.fedorenko@yahoo.com">✉ Kontakt aufnehmen</a><span aria-hidden="true">·</span><a href="Oleksandra_Fedorenko_CV.pdf" download>↓ Lebenslauf (PDF)</a>
     </div>
 
   </div>
@@ -771,7 +895,7 @@
       roman: "I", title: "Der Magier", hue: "#3f9aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_01_Magician.jpg",
       icon: `<path d="M50 12 L58 38 L50 34 L42 38 Z" stroke-linejoin="round"/><line x1="50" y1="34" x2="50" y2="78" stroke-linecap="round"/><path d="M38 88 Q50 78 62 88" stroke-opacity="0.8" stroke-linecap="round"/><path d="M30 24 L36 30 M70 24 L64 30 M22 50 L30 50 M78 50 L70 50" stroke-linecap="round" stroke-opacity="0.7"/><path d="M50 56 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0" stroke-opacity="0.9"/>`,
-      text: "Legacy-Code in moderne Angular-NgRx-Architektur überführt — Ladezeit um 35 % gesenkt, abgesichert mit Jest, Jasmine und Karma.",
+      text: "Altcode in moderne Angular-Architektur mit NgRx / Signal Store überführt — neue Funktionen durch Modul- und Snapshot-Tests abgesichert.",
       kw: "Willenskraft",
       rat: "Nutzen Sie Ihre Mittel und handeln Sie bewusst.",
       read: ["Sie haben Ihre Fähigkeiten entdeckt und gelernt, sie gezielt einzusetzen.", "Alle Mittel liegen bereit. Jetzt gilt es, den Willen in Handeln zu verwandeln.", "Ihr Geschick öffnet eine Tür — wer entschlossen zugreift, gestaltet das Ergebnis."]
@@ -780,7 +904,7 @@
       roman: "XIX", title: "Die Sonne", hue: "#e0af68",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_19_Sun.jpg",
       icon: `<circle cx="50" cy="48" r="16" stroke-opacity="0.9"/><g stroke-linecap="round" stroke-opacity="0.8"><line x1="50" y1="18" x2="50" y2="10"/><line x1="50" y1="78" x2="50" y2="86"/><line x1="20" y1="48" x2="12" y2="48"/><line x1="80" y1="48" x2="88" y2="48"/><line x1="28" y1="26" x2="22" y2="20"/><line x1="72" y1="26" x2="78" y2="20"/><line x1="28" y1="70" x2="22" y2="76"/><line x1="72" y1="70" x2="78" y2="76"/></g>`,
-      text: "Angular-Grundlagenschulungen und Q&A-Runden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich begleitet.",
+      text: "Angular-Grundlagenschulungen und interne Fragerunden geleitet — Wissen weitergegeben, Kolleg:innen fachlich begleitet.",
       kw: "Klarheit und Zuversicht",
       rat: "Zeigen Sie sich offen — Zuversicht trägt Sie.",
       read: ["Eine Zeit der Klarheit und Zuversicht — ein Erfolg wirkt bis heute nach.", "Offenheit und Lebensfreude tragen Sie. Die Dinge zeigen sich, wie sie sind.", "Ein gutes Zeichen: Erfolg, Wärme und Anerkennung kündigen sich an."]
@@ -789,7 +913,7 @@
       roman: "XVI", title: "Der Turm", hue: "#c0567a",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_16_Tower.jpg",
       icon: `<rect x="38" y="20" width="24" height="56" rx="2" stroke-opacity="0.85"/><line x1="38" y1="34" x2="62" y2="34" stroke-opacity="0.6"/><line x1="38" y1="48" x2="62" y2="48" stroke-opacity="0.6"/><line x1="38" y1="62" x2="62" y2="62" stroke-opacity="0.6"/><path d="M50 10 L58 24 L50 20 L42 24 Z" stroke-linejoin="round"/><path d="M28 86 L72 86" stroke-opacity="0.7" stroke-linecap="round"/>`,
-      text: "Core Web Vitals über 20+ Business Units auf SAP Commerce Cloud verbessert (Hybris + Spartacus).",
+      text: "Ladezeiten und Core Web Vitals optimiert, die Oberfläche eines Prozessmanagement-Systems spürbar beschleunigt.",
       kw: "Umbruch",
       rat: "Lassen Sie Überholtes los, bevor es Sie bindet.",
       read: ["Ein Umbruch hat Altes eingerissen — schmerzhaft, aber befreiend.", "Alte Gewissheiten geraten ins Wanken. Lassen Sie los, was nicht mehr trägt.", "Ein plötzlicher Wandel räumt auf; danach lässt sich auf festem Grund neu bauen."]
@@ -798,7 +922,7 @@
       roman: "XI", title: "Die Gerechtigkeit", hue: "#6fa88b",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_11_Justice.jpg",
       icon: `<line x1="50" y1="14" x2="50" y2="80" stroke-linecap="round"/><line x1="24" y1="30" x2="76" y2="30" stroke-linecap="round"/><path d="M24 30 L16 46 L32 46 Z" stroke-linejoin="round"/><path d="M76 30 L68 46 L84 46 Z" stroke-linejoin="round"/><line x1="38" y1="86" x2="62" y2="86" stroke-linecap="round"/>`,
-      text: "Clean Code, Code-Reviews und Tests mit Jest, Jasmine, Karma und Playwright (E2E) — Testabdeckung über 80 %.",
+      text: "Clean Code, SOLID, Code Reviews und Tests mit Jest, Jasmine und Karma — Qualität als Gewohnheit.",
       kw: "Gerechtigkeit",
       rat: "Entscheiden Sie sachlich und ehrlich.",
       read: ["Eine Entscheidung wurde ehrlich getroffen, ihre Folgen wirken bis heute nach.", "Wägen Sie sachlich ab. Klarheit und Fairness weisen jetzt den Weg.", "Ein gerechter Ausgleich naht: Sorgfalt und Redlichkeit werden belohnt."]
@@ -807,7 +931,7 @@
       roman: "XVII", title: "Der Stern", hue: "#7aa2d8",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_17_Star.jpg",
       icon: `<path d="M50 12 L58 36 L84 36 L63 51 L71 76 L50 61 L29 76 L37 51 L16 36 L42 36 Z" stroke-opacity="0.9"/>`,
-      text: "Lernt nie aus: absolviert seit 2024 einen B.Sc. Software Engineering an der National Technical University of Ukraine — Ambition mit langem Atem.",
+      text: "Lernt nie aus: absolviert seit 2024 einen B.Sc. Softwaretechnik an der Nationalen Technischen Universität der Ukraine — Ambition mit langem Atem.",
       kw: "Hoffnung",
       rat: "Bewahren Sie Vertrauen in Ihren Weg.",
       read: ["Nach einer schweren Phase kehrte Hoffnung zurück; etwas in Ihnen heilte.", "Vertrauen und Inspiration nähren Sie. Bleiben Sie Ihrem Ziel treu.", "Ein Lichtblick am Horizont: Ihre Wünsche finden einen offenen Himmel."]
@@ -816,7 +940,7 @@
       roman: "VI", title: "Die Liebenden", hue: "#d87aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_06_Lovers.jpg",
       icon: `<circle cx="40" cy="46" r="18" stroke-opacity="0.85"/><circle cx="60" cy="46" r="18" stroke-opacity="0.85"/>`,
-      text: "Enge Zusammenarbeit mit Backend, Design und BA-Teams — internationale, interdisziplinäre Projekte sind ihr Alltag.",
+      text: "Direkte Abstimmung mit Design- und Analyseteam — Zusammenarbeit über Rollen hinweg ist ihr Alltag.",
       kw: "Entscheidung",
       rat: "Folgen Sie Ihren Werten, nicht dem Druck.",
       read: ["Eine wichtige Bindung oder Wahl hat Ihre Richtung bestimmt.", "Sie stehen vor einer Wahl. Folgen Sie dem, was Ihren Werten entspricht.", "Eine stimmige Verbindung entsteht — ein Ja, das Herz und Verstand vereint."]
@@ -845,7 +969,7 @@
       roman: "I", title: "The Magician", hue: "#3f9aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_01_Magician.jpg",
       icon: `<path d="M50 12 L58 38 L50 34 L42 38 Z" stroke-linejoin="round"/><line x1="50" y1="34" x2="50" y2="78" stroke-linecap="round"/><path d="M38 88 Q50 78 62 88" stroke-opacity="0.8" stroke-linecap="round"/><path d="M30 24 L36 30 M70 24 L64 30 M22 50 L30 50 M78 50 L70 50" stroke-linecap="round" stroke-opacity="0.7"/><path d="M50 56 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0" stroke-opacity="0.9"/>`,
-      text: "Refactored legacy code into a modern Angular NgRx architecture — load time reduced by 35 %, backed by Jest, Jasmine and Karma tests.",
+      text: "Legacy code moved to a modern Angular architecture with NgRx / Signal Store — new features secured with unit and snapshot tests.",
       kw: "Willpower",
       rat: "Use your resources and act deliberately.",
       read: ["You discovered your abilities and learned to use them with purpose.", "All the means are at hand. Now it is time to turn will into action.", "Your skill opens a door — whoever acts decisively shapes the outcome."]
@@ -854,7 +978,7 @@
       roman: "XIX", title: "The Sun", hue: "#e0af68",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_19_Sun.jpg",
       icon: `<circle cx="50" cy="48" r="16" stroke-opacity="0.9"/><g stroke-linecap="round" stroke-opacity="0.8"><line x1="50" y1="18" x2="50" y2="10"/><line x1="50" y1="78" x2="50" y2="86"/><line x1="20" y1="48" x2="12" y2="48"/><line x1="80" y1="48" x2="88" y2="48"/><line x1="28" y1="26" x2="22" y2="20"/><line x1="72" y1="26" x2="78" y2="20"/><line x1="28" y1="70" x2="22" y2="76"/><line x1="72" y1="70" x2="78" y2="76"/></g>`,
-      text: "Led Angular Fundamentals training and Q&A sessions in the EPAM COE FrontEnd Program, mentored colleagues.",
+      text: "Led Angular fundamentals training and internal Q&A sessions — passing knowledge on and supporting colleagues.",
       kw: "Clarity and confidence",
       rat: "Show yourself open — confidence carries you.",
       read: ["A time of clarity and confidence — a success that still echoes today.", "Openness and joy of living carry you. Things show themselves as they are.", "A good sign: success, warmth and recognition are on their way."]
@@ -863,7 +987,7 @@
       roman: "XVI", title: "The Tower", hue: "#c0567a",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_16_Tower.jpg",
       icon: `<rect x="38" y="20" width="24" height="56" rx="2" stroke-opacity="0.85"/><line x1="38" y1="34" x2="62" y2="34" stroke-opacity="0.6"/><line x1="38" y1="48" x2="62" y2="48" stroke-opacity="0.6"/><line x1="38" y1="62" x2="62" y2="62" stroke-opacity="0.6"/><path d="M50 10 L58 24 L50 20 L42 24 Z" stroke-linejoin="round"/><path d="M28 86 L72 86" stroke-opacity="0.7" stroke-linecap="round"/>`,
-      text: "Improved Core Web Vitals across 20+ business units on SAP Commerce Cloud (Hybris + Spartacus).",
+      text: "Optimized load times and Core Web Vitals, noticeably sped up the interface of a process management system.",
       kw: "Upheaval",
       rat: "Let go of what is outdated before it ties you down.",
       read: ["An upheaval tore down the old — painful, but liberating.", "Old certainties begin to shake. Let go of what no longer holds.", "A sudden change clears the ground; afterwards you can rebuild on solid footing."]
@@ -872,7 +996,7 @@
       roman: "XI", title: "Justice", hue: "#6fa88b",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_11_Justice.jpg",
       icon: `<line x1="50" y1="14" x2="50" y2="80" stroke-linecap="round"/><line x1="24" y1="30" x2="76" y2="30" stroke-linecap="round"/><path d="M24 30 L16 46 L32 46 Z" stroke-linejoin="round"/><path d="M76 30 L68 46 L84 46 Z" stroke-linejoin="round"/><line x1="38" y1="86" x2="62" y2="86" stroke-linecap="round"/>`,
-      text: "Clean code, code reviews and tests with Jest, Jasmine, Karma and Playwright (E2E) — test coverage above 80 %.",
+      text: "Clean Code, SOLID, code reviews and tests with Jest, Jasmine and Karma — quality as a habit.",
       kw: "Fairness",
       rat: "Decide objectively and honestly.",
       read: ["A decision was made honestly, and its consequences still resonate today.", "Weigh things objectively. Clarity and fairness now show the way.", "A fair balance is approaching: care and integrity will be rewarded."]
@@ -881,7 +1005,7 @@
       roman: "XVII", title: "The Star", hue: "#7aa2d8",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_17_Star.jpg",
       icon: `<path d="M50 12 L58 36 L84 36 L63 51 L71 76 L50 61 L29 76 L37 51 L16 36 L42 36 Z" stroke-opacity="0.9"/>`,
-      text: "Never stops learning: studying for a B.Sc. in Software Engineering at the National Technical University of Ukraine since 2024 — ambition with staying power.",
+      text: "Never stops learning: pursuing a B.Sc. in Software Engineering at the National Technical University of Ukraine since 2024 — ambition with staying power.",
       kw: "Hope",
       rat: "Keep faith in your path.",
       read: ["After a hard phase, hope returned; something in you healed.", "Trust and inspiration nourish you. Stay true to your goal.", "A glimmer on the horizon: your wishes find an open sky."]
@@ -890,7 +1014,7 @@
       roman: "VI", title: "The Lovers", hue: "#d87aa0",
       img: "https://commons.wikimedia.org/wiki/Special:FilePath/RWS_Tarot_06_Lovers.jpg",
       icon: `<circle cx="40" cy="46" r="18" stroke-opacity="0.85"/><circle cx="60" cy="46" r="18" stroke-opacity="0.85"/>`,
-      text: "Close collaboration with backend, design and BA teams — international, cross-functional projects are part of everyday work.",
+      text: "Direct collaboration with the design and analysis team — working across roles is part of everyday life.",
       kw: "Decision",
       rat: "Follow your values, not the pressure.",
       read: ["An important bond or choice has set your direction.", "You face a choice. Follow what matches your values.", "A harmonious connection is forming — a yes that unites heart and mind."]
@@ -935,7 +1059,7 @@
 
   function cardHTML(card, idx, reading){
     return `
-      <div class="tcard" data-idx="${idx}" onclick="flipCard(this)">
+      <div class="tcard" data-idx="${idx}">
         <div class="tcard-inner">
           <div class="tcard-face tcard-back">
             <svg viewBox="0 0 100 100" fill="none" stroke="#d8b76b" stroke-width="1.4">
@@ -972,11 +1096,17 @@
     toggleClear();
   }
 
-  function dealCards(){
-    const picks = shuffle(DECKS[LANG]).slice(0,3);
+  let curQ = '';
+  function dealCards(useQ){
     const input = document.getElementById('tarotQuestionInput');
     const echo = document.getElementById('tarotQuestionEcho');
-    const question = input ? input.value.trim() : '';
+    if(useQ === true){
+      const v = input ? input.value.trim() : '';
+      if(!v){ if(input) input.focus(); return; }
+      curQ = v;
+    } else if(useQ === undefined){ curQ = ''; }
+    const question = curQ;
+    const picks = shuffle(DECKS[LANG]).slice(0,3);
     if(input){ input.value = ''; toggleClear(); }
     document.getElementById('tarotCards').innerHTML = picks.map((c,i)=>cardHTML(c,i,!!question)).join('');
     document.getElementById('tarotVerdict').classList.remove('show');
@@ -985,21 +1115,28 @@
       ? T('sub1')
       : T('sub2');
     echo.textContent = question ? T('echo', question) : '✦';
-    echo.style.visibility = question ? 'visible' : 'hidden';
+    echo.style.display = question ? 'block' : 'none';
 
     const [p1,p2,p3] = picks;
     document.getElementById('tarotVerdictLabel').textContent = T(question ? 'vl1' : 'vl2');
+    document.getElementById('tarotVerdictTitle').style.display = question ? 'none' : '';
     document.getElementById('tarotVerdictTitle').textContent = T(question ? 'vt1' : 'vt2');
     document.getElementById('tarotVerdictText').textContent = question
       ? T('rd1', p1, p2, p3)
       : T('rd2');
     document.getElementById('tarotVerdict').classList.toggle('reading', !!question);
+    document.querySelector('.tarot-modal').classList.toggle('qmode', !!question);
 
     autoRevealCards();
   }
 
   function autoRevealCards(){
     const cards = Array.from(document.querySelectorAll('.tcard'));
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){
+      cards.forEach(c=>c.classList.add('flipped'));
+      document.getElementById('tarotVerdict').classList.add('show');
+      return;
+    }
     cards.forEach((card, i)=>{
       setTimeout(()=>{
         card.classList.add('flipped');
@@ -1010,10 +1147,13 @@
     });
   }
 
+  let lastFocus = null;
   function openTarot(){
+    lastFocus = document.activeElement;
     dealCards();
     document.getElementById('tarotOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+    const c = document.querySelector('.tarot-close'); if(c) c.focus();
   }
   function closeTarot(){
     document.getElementById('tarotOverlay').classList.remove('open');
@@ -1022,9 +1162,11 @@
     document.getElementById('tarotVerdict').classList.remove('show');
     const input = document.getElementById('tarotQuestionInput');
     if(input) input.value = '';
+    curQ = '';
     toggleClear();
     const echo = document.getElementById('tarotQuestionEcho');
     if(echo){ echo.textContent = ''; }
+    if(lastFocus && lastFocus.focus){ lastFocus.focus(); lastFocus = null; }
   }
   function flipCard(el){
     el.classList.add('flipped');
@@ -1034,10 +1176,21 @@
       setTimeout(()=>{ document.getElementById('tarotVerdict').classList.add('show'); }, 400);
     }
   }
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeTarot(); });
+  document.addEventListener('keydown', (e)=>{
+    const ov = document.getElementById('tarotOverlay');
+    if(!ov.classList.contains('open')) return;
+    if(e.key === 'Escape'){ closeTarot(); return; }
+    if(e.key === 'Tab'){
+      const f = Array.from(ov.querySelectorAll('button, a[href], input')).filter(el=>el.offsetParent!==null);
+      if(!f.length) return;
+      const first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
 
   /* ---- language switch (DE/EN on one page) ---- */
-  const I18N = {"att": {"html": {"en": {"lang": "en"}, "de": {"lang": "de"}}, "meta[name=\"description\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer (Angular) with over 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:title\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer"}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin"}}, "meta[property=\"og:description\"]": {"en": {"content": "Angular developer with over 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Angular-Entwicklerin mit über 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:locale\"]": {"en": {"content": "en_US"}, "de": {"content": "de_DE"}}, "button.tarot-close": {"en": {"aria-label": "Close"}, "de": {"aria-label": "Schließen"}}, "input#tarotQuestionInput": {"en": {"placeholder": "Ask the cards a question …"}, "de": {"placeholder": "Stellen Sie den Karten eine Frage …"}}, "button#tarotClear": {"en": {"aria-label": "Clear question"}, "de": {"aria-label": "Frage löschen"}}}, "de": ["Oleksandra Fedorenko — Frontend-Entwicklerin", "OLEKSANDRA FEDORENKO", "Erfahrung", "Projekt", "Ausbildung", "EN", "Oleksandra Fedorenko", "Frontend-Entwicklerin", "Über 5 Jahre Berufserfahrung in der Entwicklung skalierbarer, leistungsstarker Webanwendungen. Schwerpunkte: Umsetzung neuer Designs, Optimierung von Ladezeiten und Core Web Vitals sowie enge Abstimmung mit Design- und Analyseteams.", "Kontakt aufnehmen", "Lebenslauf PDF", "✦", "✧", "✦", "·", "🔮", " Tarot-Lesung", "Offen für neue Herausforderungen", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Programmiersprachen", "TypeScript", "JavaScript", "HTML5", "CSS3", "SASS / SCSS", "Frameworks & Bibliotheken", "Angular (v2–20)", "RxJS", "NgRx / Redux / Signal Store", "SAP Spartacus / Hybris", "Nx Monorepo", "Angular Material", "Chart.js / ag-Grid", "Bootstrap", "Testing", "Jest / Jasmine / Karma", "Playwright", "Werkzeuge & CI/CD", "Git", "Jenkins / GitLab CI", "ESLint / Prettier / SonarQube", "Postman", "Jira", "Figma", "Methoden", "Agile / Scrum, Code-Reviews", "TDD", "Clean Code, SOLID", "BEM", "Sprachen", "Englisch", "fließend", "Deutsch", "gute Kenntnisse", "Ukrainisch", "Muttersprache", "Russisch", "Muttersprache", "Zertifikate", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Berufserfahrung", "07/2023 – 06/2026", "Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt · ", "epam.com", "Neugestaltung und Erweiterung einer E-Commerce-Website nach Figma-Vorlagen, Entwicklung wiederverwendbarer Komponenten und Cloud-Migration eines Prozessmanagement-Systems (Details unter „Ausgewählte Projekte“)", "Zustandsverwaltung mit ", "NgRx / Signal Store", ", Migration von Altcode (Legacy) auf moderne Angular-Architektur", "Integration von REST-Schnittstellen und reaktiven Formularen, Optimierung von Ladezeiten und ", "Core Web Vitals", "Direkte Abstimmung mit Design- und Analyseteam", "Angular-Grundlagenschulungen und interne Fragerunden im EPAM COE FrontEnd Program geleitet, Kolleg:innen fachlich betreut", "10/2021 – 07/2023", "Junior Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt · ", "epam.com", "USIS Transformation Project:", " Fehler analysiert und behoben, Modul- und Snapshot-Tests geschrieben, kleinere UI-Funktionen umgesetzt, Mitwirkung an den Entwicklungsrichtlinien des Projekts", "TR Legal Tracker & Lösung zur Betrugserkennung:", " Fehler in bestehenden Komponenten behoben, Modul- und Snapshot-Tests geschrieben, Komponenten um kleinere Funktionen erweitert", "06/2021 – 10/2021", "Praktikantin — EPAM Lab", "EPAM Systems Inc., Frankfurt · Ausbildungsprogramm", "Lernprojekt: Filmplattform (Frontend und Backend) entwickelt, Datenbank eingerichtet und Anwendung bereitgestellt", "Nach erfolgreichem Abschluss im Oktober 2021 Übernahme in ein Produktivprojekt", "10/2018 – 02/2021", "Elternzeit", "2013 – 05/2018", "Architektin / Leitende Architektin", "Frühere Laufbahn in Architektur & Bauwesen", "Architekturentwurf und Projektkoordination, Verantwortung für technische Dokumentation und Visualisierungsprozesse", "Erfahrung mit ", "AutoCAD, ArchiCAD, Revit und SketchUp", " — Grundlage für strukturiertes Denken, Präzision und das heute auf Software-Interfaces angewendete Gespür für UI-Design", "Tools:", " AutoCAD · ArchiCAD · Revit · SketchUp", "Ausgewählte Projekte", "E-Commerce-Plattform: Website Redesign", "EPAM Systems Inc., Kundenprojekt", "Website-Relaunch mit ", "neuem Design und neuer Funktionalität", " als Kernaufgabe", "Umgesetzt mit ", "Angular 16 und 20", " sowie NgRx / Signal Store innerhalb eines Monorepos", "Integration von REST-APIs, Umsetzung von ", "Figma", "-Designs", "Arbeit mit reaktiven Formularen (Reactive Forms)", "Fehlerbehebung und Tests neuer Funktionen mit Jasmine und Karma", "Team aus Backend-Entwickler:innen, Frontend-Entwickler:innen und QA/Testern", "Enge Zusammenarbeit mit einem separaten ", "Kunden-Design-Team", " durch laufenden Austausch sowie mit einem BA-Team durch Meetings, Grooming und Planning — das Gesamtteam war ", "international", "Prozessmanagement-System: Migration in die Cloud", "EPAM Systems Inc., Kundenprojekt", "Migration eines IBM-BPM-Systems auf eine moderne, cloudbasierte Lösung (Google Cloud)", "Neue Funktionen eigenständig entwickelt und die Oberfläche spürbar beschleunigt", "Continuous Integration mit ", "Jenkins", " eingerichtet", "Neue Funktionen durch Modul- und Snapshot-Tests abgesichert", "Ausbildung", "09/2024 – 07/2027 (voraussichtlich)", "B.Sc. Software Engineering", "National Technical University of Ukraine, Kyiv", "02/2021 – 06/2021", "Weiterbildung Frontend-Entwicklung", "EPAM Systems, externer Weiterbildungskurs", "09/2011 – 03/2013", "M.Sc. Stadtplanung", "Nationale Universität Lwiw Polytechnik", "09/2006 – 07/2011", "B.Sc. Architektur", "Kyjiw Nationale Universität für Bauwesen und Architektur", "🔮 Noch unentschlossen?", "Lassen Sie die Karten entscheiden — eine kurze, augenzwinkernde Tarot-Lesung mit sehr handfesten Argumenten.", "Karten ziehen", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · zuletzt aktualisiert: Oktober 2026\n", "×", "Warum Sie Oleksandra einstellen sollten", "Drei Karten aus dem Deck, drei sehr reale Gründe.", "×", "↻ Karten befragen", "Das Urteil", "Was die Karten zeigen", "Jetzt Kontakt aufnehmen →"], "en": ["Oleksandra Fedorenko — Frontend Developer", "OLEKSANDRA FEDORENKO", "Experience", "Projects", "Education", "DE", "Oleksandra Fedorenko", "Frontend Developer", "Over 5 years of experience developing scalable, high-performance web applications. Focus: implementing new designs, optimizing load times and Core Web Vitals, and close collaboration with design and analysis teams.", "Get in touch", "Resume PDF (DE)", "✦", "✧", "✦", "·", "🔮", " Tarot Reading", "Open to new challenges", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Programming languages", "TypeScript", "JavaScript", "HTML5", "CSS3", "SASS / SCSS", "Frameworks & libraries", "Angular (v2–20)", "RxJS", "NgRx / Redux / Signal Store", "SAP Spartacus / Hybris", "Nx Monorepo", "Angular Material", "Chart.js / ag-Grid", "Bootstrap", "Testing", "Jest / Jasmine / Karma", "Playwright", "Tools & CI/CD", "Git", "Jenkins / GitLab CI", "ESLint / Prettier / SonarQube", "Postman", "Jira", "Figma", "Methods", "Agile / Scrum, code reviews", "TDD", "Clean Code, SOLID", "BEM", "Languages", "English", "fluent", "German", "good command", "Ukrainian", "native", "Russian", "native", "Certificates", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Professional experience", "07/2023 – 06/2026", "Frontend Developer", "EPAM Systems Inc., Frankfurt · ", "epam.com", "Redesigned and extended an e-commerce website based on Figma designs, built reusable components and migrated a process management system to the cloud (details under “Selected projects”)", "State management with ", "NgRx / Signal Store", ", migration of legacy code to a modern Angular architecture", "Integration of REST APIs and reactive forms, optimization of load times and ", "Core Web Vitals", "Direct collaboration with the design and analysis team", "Led Angular Fundamentals training and Q&A sessions in the EPAM COE FrontEnd Program, mentored colleagues", "10/2021 – 07/2023", "Junior Frontend Developer", "EPAM Systems Inc., Frankfurt · ", "epam.com", "USIS Transformation Project:", " analyzed and fixed bugs, wrote unit and snapshot tests, implemented smaller UI features, contributed to the project’s development guidelines", "TR Legal Tracker & fraud detection solution:", " fixed bugs in existing components, wrote unit and snapshot tests, extended components with smaller features", "06/2021 – 10/2021", "Intern — EPAM Lab", "EPAM Systems Inc., Frankfurt · Training program", "Learning project: built a film platform (frontend and backend), set up the database and deployed the application", "After successful completion, moved to a production project in October 2021", "10/2018 – 02/2021", "Parental leave", "2013 – 05/2018", "Architect / Lead Architect", "Earlier career in architecture & construction", "Architectural design and project coordination, responsibility for technical documentation and visualization workflows", "Experience with ", "AutoCAD, ArchiCAD, Revit and SketchUp", " — the foundation for structured thinking, precision and a sense for UI design, now applied to software interfaces", "Tools:", " AutoCAD · ArchiCAD · Revit · SketchUp", "Selected projects", "E-commerce platform: website redesign", "EPAM Systems Inc., client project", "Website relaunch with a ", "new design and new functionality", " as the core task", "Built with ", "Angular 16 and 20", " and NgRx / Signal Store inside a monorepo", "REST API integration, implementation of ", "Figma", " designs", "Work with reactive forms", "Bug fixing and tests for new features with Jasmine and Karma", "Team of backend developers, frontend developers and QA/testers", "Close collaboration with a separate ", "client design team", " through ongoing exchange and with a BA team through meetings, grooming and planning — the whole team was ", "international", "Process management system: migration to the cloud", "EPAM Systems Inc., client project", "Migration of an IBM BPM system to a modern, cloud-based solution (Google Cloud)", "Developed new features independently and noticeably sped up the interface", "Continuous integration with ", "Jenkins", " set up", "Secured new features with unit and snapshot tests", "Education", "09/2024 – 07/2027 (expected)", "B.Sc. Software Engineering", "National Technical University of Ukraine, Kyiv", "02/2021 – 06/2021", "Frontend development training", "EPAM Systems, external training course", "09/2011 – 03/2013", "M.Sc. Urban Planning", "Lviv Polytechnic National University", "09/2006 – 07/2011", "B.Sc. Architecture", "Kyiv National University of Construction and Architecture", "🔮 Still undecided?", "Let the cards decide — a short, tongue-in-cheek tarot reading with very solid arguments.", "Draw cards", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · last updated: October 2026\n", "×", "Why you should hire Oleksandra", "Three cards from the deck, three very real reasons.", "×", "↻ Ask the cards", "The verdict", "What the cards show", "Get in touch now →"]};
+  const I18N = {"att": {"html": {"en": {"lang": "en"}, "de": {"lang": "de"}}, "meta[name=\"description\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer (Angular) with 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin (Angular) mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:title\"]": {"en": {"content": "Oleksandra Fedorenko — Frontend Developer"}, "de": {"content": "Oleksandra Fedorenko — Frontend-Entwicklerin"}}, "meta[property=\"og:description\"]": {"en": {"content": "Angular developer with 5 years of professional experience. Portfolio and resume."}, "de": {"content": "Angular-Entwicklerin mit 5 Jahren Berufserfahrung. Portfolio und Lebenslauf."}}, "meta[property=\"og:locale\"]": {"en": {"content": "en_US"}, "de": {"content": "de_DE"}}, "button.tarot-close": {"en": {"aria-label": "Close"}, "de": {"aria-label": "Schließen"}}, "input#tarotQuestionInput": {"en": {"aria-label": "Your question for the cards", "placeholder": "Learn something about yourself …"}, "de": {"aria-label": "Ihre Frage an die Karten", "placeholder": "Erfahren Sie etwas über sich …"}}, "button#tarotClear": {"en": {"aria-label": "Clear question"}, "de": {"aria-label": "Frage löschen"}}}, "de": ["Oleksandra Fedorenko — Frontend-Entwicklerin", "OLEKSANDRA FEDORENKO", "Erfahrung", "Ausbildung", "EN", "Oleksandra Fedorenko", "Frontend-Entwicklerin", "5 Jahre Berufserfahrung in der Entwicklung und Weiterentwicklung komplexer Webanwendungen im Enterprise- und E-Commerce-Umfeld. Schwerpunkt: Frontend-Entwicklung mit Angular — Umsetzung neuer Funktionen, Modernisierung bestehender Anwendungen und Performance-Optimierung.", "Kontakt aufnehmen", "Lebenslauf PDF", "✦", "✧", "✦", "·", "🔮", " Tarot-Lesung", "Auf der Suche nach einer neuen Rolle", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Expertise", "Enterprise Web Applications", "E-Commerce", "Frontend-Architektur", "Performance-Optimierung", "Cloud Migration", "Tech Stack", "Angular (2–20)", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3 / SCSS", "Angular Material", "Bootstrap", "SAP Spartacus (Hybris)", "Angular Ecosystem", "NgRx", "Signal Store", "RxJS", "Nx Monorepo", "REST APIs", "Reactive Forms", "Werkzeuge", "Git", "Jenkins", "GitLab CI", "Jira", "Postman", "Figma", "Chart.js", "Testing", "Jest", "Jasmine", "Karma", "ESLint", "Prettier", "SonarQube", "Practices", "Agile Entwicklung (Scrum)", "Code Reviews", "Test Driven Development (TDD)", "Clean Code Principles", "SOLID Principles", "BEM Methodology", "Sprachen", "Englisch", "fließend", "Deutsch", "gute Kenntnisse", "Ukrainisch", "Muttersprache", "Russisch", "Muttersprache", "Zertifikate", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Berufserfahrung", "06/2026 – heute", "Projektarbeit und fachliche Weiterentwicklung", "Deutschland", "07/2023 – 06/2026", "Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt, Deutschland · ", "epam.com", "E-Commerce-Plattform: Neugestaltung der Website", "Neugestaltung und Erweiterung der Website nach Figma-Vorlagen", "Entwicklung wiederverwendbarer Komponenten", "Zustandsverwaltung mit ", "NgRx / Signal Store", ", Migration von Altcode", "Integration von REST-Schnittstellen und reaktiven Formularen", "Optimierung von Ladezeiten und ", "Core Web Vitals", "Direkte Abstimmung mit Design- und Analyseteam", "Prozessmanagement-System: Migration in die Cloud", "Entwicklung neuer Funktionen, Beschleunigung der Oberfläche", "Einrichtung der kontinuierlichen Integration mit ", "Jenkins", "Absicherung neuer Funktionen durch Modul- und Snapshot-Tests", "Projektübergreifend", "Leitung von Angular-Grundlagenschulungen und internen Fragerunden", "Analyse und Behebung von Fehlern", "10/2021 – 07/2023", "Junior Frontend-Entwicklerin", "EPAM Systems Inc., Frankfurt, Deutschland · ", "epam.com", "Projekt „USIS Transformation“", "Erstellung von Modul- und Snapshot-Tests", "Umsetzung kleinerer Funktionen der Benutzeroberfläche", "Mitarbeit an den Entwicklungsrichtlinien des Projekts", "TR Legal Tracker und Lösung zur Betrugserkennung", "Behebung von Fehlern in bestehenden Komponenten", "Erweiterung von Komponenten um kleinere Funktionen", "06/2021 – 10/2021", "Praktikantin — EPAM Lab", "EPAM Systems Inc., Frankfurt, Deutschland · Ausbildungsprogramm", "Entwicklung eines Lernprojekts: Filmplattform (Frontend und Backend)", "Einrichtung der Datenbank und Bereitstellung der Anwendung", "Übernahme in ein Produktivprojekt im Oktober 2021", "Bildungsweg IT", "09/2024 – 07/2027 (voraussichtlich)", "B.Sc. Softwaretechnik", "Nationale Technische Universität der Ukraine, Kyjiw", "02/2021 – 06/2021", "Weiterbildung Frontend-Entwicklung", "EPAM Systems, externer Weiterbildungskurs", "Weitere Berufserfahrung", "10/2018 – 02/2021", "Elternzeit", "04/2013 – 05/2018", "Architektin / Leitende Architektin", "Architekturentwurf und Projektkoordination", "Technische Dokumentation erstellt und gepflegt", "Visualisierungen mit ", "AutoCAD, ArchiCAD, Revit, SketchUp", "Studium", "09/2011 – 03/2013", "M.Sc. Stadtplanung", "Nationale Universität Lwiw Polytechnik", "09/2006 – 07/2011", "B.Sc. Architektur", "Kyjiw Nationale Universität für Bauwesen und Architektur", "🔮 Noch unentschlossen?", "Lassen Sie die Karten entscheiden — eine kurze, augenzwinkernde Tarot-Lesung mit sehr handfesten Argumenten.", "Karten ziehen", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · zuletzt aktualisiert: Oktober 2026\n", "×", "Warum Sie Oleksandra einstellen sollten", "Drei Karten aus dem Deck, drei sehr reale Gründe.", "↻ Neu mischen", "Das Urteil", "Was die Karten zeigen", "Jetzt Kontakt aufnehmen →", "Lebenslauf herunterladen", "×", "Frage stellen", "✉ Kontakt aufnehmen", "·", "↓ Lebenslauf (PDF)"], "en": ["Oleksandra Fedorenko — Frontend Developer", "OLEKSANDRA FEDORENKO", "Experience", "Education", "DE", "Oleksandra Fedorenko", "Frontend Developer", "5 years of experience developing and evolving complex web applications in the enterprise and e-commerce space. Focus: frontend development with Angular — implementing new features, modernizing existing applications and performance optimization.", "Get in touch", "Resume PDF (DE)", "✦", "✧", "✦", "·", "🔮", " Tarot Reading", "Looking for a new role", "+49 160 3847759", "oleksandra.fedorenko@yahoo.com", "61381 Friedrichsdorf-Seulberg", "LinkedIn", "Expertise", "Enterprise Web Applications", "E-Commerce", "Frontend architecture", "Performance optimization", "Cloud migration", "Tech Stack", "Angular (2–20)", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3 / SCSS", "Angular Material", "Bootstrap", "SAP Spartacus (Hybris)", "Angular Ecosystem", "NgRx", "Signal Store", "RxJS", "Nx Monorepo", "REST APIs", "Reactive Forms", "Tools", "Git", "Jenkins", "GitLab CI", "Jira", "Postman", "Figma", "Chart.js", "Testing", "Jest", "Jasmine", "Karma", "ESLint", "Prettier", "SonarQube", "Practices", "Agile development (Scrum)", "Code reviews", "Test-driven development (TDD)", "Clean Code principles", "SOLID principles", "BEM methodology", "Languages", "English", "fluent", "German", "good command", "Ukrainian", "native", "Russian", "native", "Certificates", "EPAM AI Literacy Program ", "(2024)", "EPAM Angular Intermediate ", "(2022)", "Professional experience", "06/2026 – present", "Project work and professional development", "Germany", "07/2023 – 06/2026", "Frontend Developer", "EPAM Systems Inc., Frankfurt, Germany · ", "epam.com", "E-commerce platform: website redesign", "Redesigned and extended the website based on Figma designs", "Developed reusable components", "State management with ", "NgRx / Signal Store", ", migration of legacy code", "Integration of REST APIs and reactive forms", "Optimization of load times and ", "Core Web Vitals", "Direct collaboration with the design and analysis team", "Process management system: migration to the cloud", "Developed new features, sped up the user interface", "Set up continuous integration with ", "Jenkins", "Secured new features with unit and snapshot tests", "Across projects", "Led Angular fundamentals training and internal Q&A sessions", "Analyzed and fixed bugs", "10/2021 – 07/2023", "Junior Frontend Developer", "EPAM Systems Inc., Frankfurt, Germany · ", "epam.com", "USIS Transformation project", "Wrote unit and snapshot tests", "Implemented smaller user interface features", "Contributed to the project's development guidelines", "TR Legal Tracker and fraud detection solution", "Fixed bugs in existing components", "Extended components with smaller features", "06/2021 – 10/2021", "Intern — EPAM Lab", "EPAM Systems Inc., Frankfurt, Germany · Training program", "Built a learning project: film platform (frontend and backend)", "Set up the database and deployed the application", "Moved to a production project in October 2021", "IT education", "09/2024 – 07/2027 (expected)", "B.Sc. Software Engineering", "National Technical University of Ukraine, Kyiv", "02/2021 – 06/2021", "Frontend development training", "EPAM Systems, external training course", "Other professional experience", "10/2018 – 02/2021", "Parental leave", "04/2013 – 05/2018", "Architect / Lead Architect", "Architectural design and project coordination", "Created and maintained technical documentation", "Visualizations with ", "AutoCAD, ArchiCAD, Revit, SketchUp", "Studies", "09/2011 – 03/2013", "M.Sc. Urban Planning", "Lviv Polytechnic National University", "09/2006 – 07/2011", "B.Sc. Architecture", "Kyiv National University of Construction and Architecture", "🔮 Still undecided?", "Let the cards decide — a short, tongue-in-cheek tarot reading with very solid arguments.", "Draw cards", "\n  Oleksandra Fedorenko · ", "oleksandra.fedorenko@yahoo.com", " · ", "+49 160 3847759", " · last updated: October 2026\n", "×", "Why you should hire Oleksandra", "Three cards from the deck, three very real reasons.", "↻ Shuffle again", "The verdict", "What the cards show", "Get in touch now →", "Download resume", "×", "Ask", "✉ Get in touch", "·", "↓ Resume (PDF)"]};
   const ELS = [document.documentElement, ...document.documentElement.querySelectorAll('*')];
   function walkText(){ const out=[]; const w=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE')return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}}); while(w.nextNode())out.push(w.currentNode); return out; }
   function setLang(l, save){
